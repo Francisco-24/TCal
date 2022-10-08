@@ -58,7 +58,9 @@ DeltaT1 = ((T_s1 - T_in1) - (T_s1 - T_out1))/log((T_s1 - T_in1)/(T_s1 - T_out1))
 h_exp1 = q1/(A_conv*DeltaT1)
 
 m1 = (h_teorico1*pi*(D*10^-3)/(k_al*pi*(D*10^-3)^2/4))^0.5;
+eta_teo_ad1 = tanh(m1*L)/(m1*L)
 eta_teo1 = tanh(m1*L_c)/(m1*L_c)
+eta_teo__ad_total = 1 - 17*A_f/A_t*(1-eta_teo_ad1)
 eta_teo_total = 1 - 17*A_f/A_t*(1-eta_teo1)
 
 %eta_exp = q1/(h_exp1*A_f*(T_s1-T_in1))
@@ -67,7 +69,8 @@ eta_exp_total = q1/(h_exp1*A_t*(T_s1-T_in1))
 x1 = [10, 36, 62];
 y1 = [0.731, 0.615, 0.538];
 
-y1_x = @(x)(cosh(m1.*(L-x)) + h_teorico1./(m1.*k_al).*sinh(m1.*(L-x)))/(cosh(m1.*L) + h_teorico1./(m1.*k_al).*sinh(m1*L));
+%y1_x = @(x)(cosh(m1.*(L-x)) + h_teorico1./(m1.*k_al).*sinh(m1.*(L-x)))/(cosh(m1.*L) + h_teorico1./(m1.*k_al).*sinh(m1*L));
+y1_x = @(x)(cosh(m1.*(L-x)))/(cosh(m1.*L));
 x = linspace(0, 0.067, 100);
 figure()
 plot(x*1000, y1_x(x))
@@ -135,7 +138,8 @@ eta_exp_total2 = q2/(h_exp2*A_t*(T_s2-T_in2))
 x2 = [10, 36, 62];
 y2 = [0.75, 0.625, 0.562];
 
-y2_x = @(x)(cosh(m2.*(L-x)) + h_teorico2./(m2.*k_al).*sinh(m2.*(L-x)))/(cosh(m2.*L) + h_teorico2./(m2.*k_al).*sinh(m2*L));
+%y2_x = @(x)(cosh(m2.*(L-x)) + h_teorico2./(m2.*k_al).*sinh(m2.*(L-x)))/(cosh(m2.*L) + h_teorico2./(m2.*k_al).*sinh(m2*L));
+y2_x = @(x)(cosh(m2.*(L-x)))/(cosh(m2.*L));
 x = linspace(0, 0.067, 100);
 figure()
 plot(x*1000, y2_x(x))
