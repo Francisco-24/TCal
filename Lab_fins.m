@@ -10,11 +10,13 @@ D = 13;
 S_T = 28;
 S_L = 17;
 S_D = sqrt(S_L^2 + (S_T/2)^2);
-A_conv = 0.05636; %calcular ainda
-k_al = 237; %descobrir o pk
-L_c = (L + D/4)*10^-3; 
+
+k_al = 237; 
+L_c = (L + D/4*10^-3); 
 A_f = pi*D*10^-3*L;
 A_t = 17*A_f + 0.110*0.100 - 17*pi*(6.5*10^-3)^2;
+A_conv = A_t;
+
 
 %% 1º ensaio
 
@@ -22,12 +24,13 @@ V1 = 0.84495;
 T_in1 = 23.5;
 T_out1 = (31.5 + 30.5 + 28.5)/3;
 T_s1 = 49.5;
-T_f1 = (T_in1 + T_out1)/2 + 273.15
+T_f1 = (T_in1 + T_out1)/2 + 273.15;
 
 if 2*(S_D - D)>= (S_T - D)
     V_max1 = S_T*V1/(S_T - D);
 end
 
+%propriedades para a temperatura de filme térmico
 ro1 =  1.1614 + ((T_f1-300)/(350-300)*(0.9950-1.1614));
 cp1 = 1007 + ((T_f1-300)/(350-300)*(1009-1007));
 niu1 = (184.6 + ((T_f1-300)/(350-300)*(208.2-184.6)))*10^-7;
@@ -35,6 +38,7 @@ v1 = (15.89 + ((T_f1-300)/(350-300)*(20.92-15.89)))*10^-6;
 k1 = (26.3 + ((T_f1-300)/(350-300)*(30-26.3)))*10^-3;
 alpha1 = (22.5 + ((T_f1-300)/(350-300)*(29.9-22.5)))*10^-6;
 Pr1 = 0.707 + ((T_f1-300)/(350-300)*(0.700-0.707));
+%numero de Prandl para a temperatura da base
 Prs1 = 0.707 + ((T_s1+275.15-300)/(350-300)*(0.700-0.707));
 
 Re_max1 = V_max1*D*10^-3/v1;
@@ -47,13 +51,13 @@ Nu1 = 0.92*C1*(Re_max1^m)*Pr1^0.36*(Pr1/Prs1)^0.25;
 
 h_teorico1 = Nu1*k1/D*10^3
 
-m1 = ro1 * A * V1;
-q1 = m1*cp1*(T_out1-T_in1)
+mf1 = ro1 * A * V1;
+q1 = mf1*cp1*(T_out1-T_in1);
 DeltaT1 = ((T_s1 - T_in1) - (T_s1 - T_out1))/log((T_s1 - T_in1)/(T_s1 - T_out1));
 
 h_exp1 = q1/(A_conv*DeltaT1)
 
-m1 = sqrt(h_teorico1*pi*(D*10^-3)/(k_al*pi*(D*10^-3)^2/4))
+m1 = (h_teorico1*pi*(D*10^-3)/(k_al*pi*(D*10^-3)^2/4))^0.5;
 eta_teo1 = tanh(m1*L_c)/(m1*L_c)
 eta_teo_total = 1 - 17*A_f/A_t*(1-eta_teo1)
 
@@ -115,8 +119,8 @@ Nu2 = 0.92*C2*(Re_max2^m)*Pr2^0.36*(Pr2/Prs2)^0.25;
 
 h_teorico2 = Nu2*k2/D*10^3
 
-m2 = ro2 * A * V2;
-q2 = m2*cp2*(T_out2-T_in2);
+mf2 = ro2 * A * V2;
+q2 = mf2*cp2*(T_out2-T_in2);
 DeltaT2 = ((T_s2 - T_in2) - (T_s2 - T_out2))/log((T_s2 - T_in2)/(T_s2 - T_out2));
 
 h_exp2 = q2/(A_conv*DeltaT2)
