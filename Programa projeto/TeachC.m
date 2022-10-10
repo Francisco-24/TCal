@@ -97,9 +97,9 @@ JMON=6;
 % Aço %%%%% Alterável %%%%%
 for I=1:NI
     for J=1:NJ
-        TCON (I,J)=14.68;
-        CV (I,J)=485.67;
-        DENSIT (I,J)=7800;
+        TCON (I,J)=121;
+        CV (I,J)=385;
+        DENSIT (I,J)=7930;
         if I==1 && J==1
            BK=TCON (I,J);
             
@@ -108,7 +108,7 @@ for I=1:NI
 end
 
 % Temperatura inicial
-TINIC=0;
+TINIC=1150;
 
 % Parâmetros de controlo do programa
 %%%%% Alterável %%%%%
