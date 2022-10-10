@@ -61,8 +61,8 @@ NJM1=NJ-1;
 
 % Dimensões totais do domínio de solução, largura e altura [m]
 %%%%% Alterável %%%%%
-W=1;
-H=1;
+W=0.24;
+H=0.24;
 
 
 % Cálculo as abcissas na direção xx
