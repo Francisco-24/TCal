@@ -81,6 +81,12 @@ for J=2:NJ
     Y(J)=Y(J-1)+DY(J-1);
 end
 
+Z = zeros(22);
+[X,Y] = meshgrid(X,Y)
+surface(X,Y,Z)
+colormap white
+
+
 % Estabelece limites do Domínio 
 for I=1:NI
     JS (I)=2;
