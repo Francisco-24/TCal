@@ -170,7 +170,7 @@ elseif CFW==3
         for J=2:NJM1
             AW(J)=0;
             DW1=DXW/GAMH(IL,J)+1/HCONV;
-            DW=SNS(J)*RY(2)/DW1;
+            DW=SNS(J)*RY(J)/DW1;
             SU(J)=SU(J)+DW*TF;
             SP(J)=SP(J)-DW;
         end
