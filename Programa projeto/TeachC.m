@@ -113,9 +113,9 @@ TINIC=1150;
 % Parâmetros de controlo do programa
 %%%%% Alterável %%%%%
 % Número máximo de iterações
-MAXIT=10;
+MAXIT=100;
 % Número máximo de interações no tempo 
-MAXSTP=20;
+MAXSTP=100;
 % O output deverá conter os valores de T em intervalos de
 NITPRI=110;
 % "NITPRI" para "NSTPRI" iterações no tempo
@@ -125,7 +125,7 @@ NSTPRI=1;
 %%%%% Alterável %%%%%
 URFT=1;
 SORMAX=0.001;
-DT=50;
+DT=100;
 
 % Selecciona o Regime---Estacionário->INTIME=0, Transiente->INTIME=1
 %%%%% Alterável %%%%%
@@ -152,10 +152,10 @@ TIME=0.0;
 
 % Valores de fronteira
 %%%%% Alterável %%%%%
-TTOP=100;
-TBOT=0;
-TLEFT=0;
-TRIGHT=0;
+TTOP=20;
+TBOT=1150;
+TLEFT=20;
+TRIGHT=20;
  
 for I=2:NIM1
     T (I,1)=TBOT;

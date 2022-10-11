@@ -23,10 +23,10 @@ function[AN,AS,AE,AW,SU,SP,T]=PROMOD(NI,NJ,NIM1,NJM1,IL,RV,YV,Y,SNS,SEW,X,XU,AN,
 %2-Fluxo, 3-Convecção e 4-simetria para a fronteira Norte, Sul, Este e 
 %Oeste (CFN,CFS,CFW,CFE)
 %%%%% Alterável %%%%%
-CFN=1;
-CFS=1;
-CFW=1;
-CFE=1;
+CFN=3;
+CFS=2;
+CFW=3;
+CFE=3;
 
 %Identifica o tipo de condição de fronteira
 I=IL;
@@ -55,8 +55,8 @@ elseif CFN==2
 %Convecção
 elseif CFN==3
     
-    HCONV=12.5;     %%%%% alterável %%%%%
-    TF=80;          %%%%% alterável %%%%%
+    HCONV=250;     %%%%% alterável %%%%%
+    TF=20;          %%%%% alterável %%%%%
     RDYN=YV(NJ)-Y(NJM1);
     AN(NJM1)=0;
     DN1=RDYN/GAMH(IL,NJM1)+1/HCONV;
@@ -95,7 +95,7 @@ if CFS==1
 %Fluxo imposto
 elseif CFS==2
 
-    QS=20;          %%%%% alterável %%%%%
+    QS=0;          %%%%% alterável %%%%%
     AS(2)=0;
     DS=QS*SEW(IL)*RV(2);
     SU(2)=SU(2)+DS;
@@ -164,8 +164,8 @@ elseif CFW==2
 elseif CFW==3
     
      if IL==2
-        HCONV=12.5;     %%%%% alterável %%%%%
-        TF=80;          %%%%% alterável %%%%%
+        HCONV=250;     %%%%% alterável %%%%%
+        TF=20;          %%%%% alterável %%%%%
         DXW=X(2)-XU(2);
         for J=2:NJM1
             AW(J)=0;
@@ -234,8 +234,8 @@ elseif CFE==2
 elseif CFE==3
     
     if IL==NIM1
-        HCONV=12.5;     %%%%% alterável %%%%%
-        TF=80;          %%%%% alterável %%%%%
+        HCONV=250;     %%%%% alterável %%%%%
+        TF=20;          %%%%% alterável %%%%%
         DXE=XU(NI)-X(NIM1);
         for J=2:NJM1
             AE(J)=0;
