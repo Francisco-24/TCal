@@ -35,13 +35,13 @@ fid=fopen ('RESULTS.txt','w');
 
 % Define o número de nós da malha segundo x e y
 %%%%% Alterável %%%%%
-IT=22;
-JT=22;
+IT=44;
+JT=44;
 
 % Define o número de pontos da malha segundo x e y
 %%%%% Alterável %%%%%
-NI=22;
-NJ=22;
+NI=44;
+NJ=44;
 
 % Constante
 GREAT=1.0E30;
@@ -89,8 +89,8 @@ end
 
 % Estabelece ponto monitor segundo x e y (IMON e JMON)
 %%%%% Alterável %%%%%
-IMON=6;
-JMON=6;
+IMON=3;
+JMON=3;
 
 % Propriedades do material (Tcond=cond,CV=calor esp,DENSIT=dens), 
 % Meio homogéneo
@@ -113,11 +113,11 @@ TINIC=1150;
 % Parâmetros de controlo do programa
 %%%%% Alterável %%%%%
 % Número máximo de iterações
-MAXIT=100;
+MAXIT=300;
 % Número máximo de interações no tempo 
 MAXSTP=100;
 % O output deverá conter os valores de T em intervalos de
-NITPRI=110;
+NITPRI=300;
 % "NITPRI" para "NSTPRI" iterações no tempo
 NSTPRI=1;    
 
@@ -125,7 +125,7 @@ NSTPRI=1;
 %%%%% Alterável %%%%%
 URFT=1;
 SORMAX=0.001;
-DT=100;
+DT=20;
 
 % Selecciona o Regime---Estacionário->INTIME=0, Transiente->INTIME=1
 %%%%% Alterável %%%%%
@@ -154,8 +154,8 @@ TIME=0.0;
 %%%%% Alterável %%%%%
 TTOP=20;
 TBOT=1150;
-TLEFT=20;
-TRIGHT=20;
+TLEFT=0;
+TRIGHT=0;
  
 for I=2:NIM1
     T (I,1)=TBOT;

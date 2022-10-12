@@ -24,7 +24,7 @@ function[AN,AS,AE,AW,SU,SP,T]=PROMOD(NI,NJ,NIM1,NJM1,IL,RV,YV,Y,SNS,SEW,X,XU,AN,
 %Oeste (CFN,CFS,CFW,CFE)
 %%%%% Alterável %%%%%
 CFN=3;
-CFS=2;
+CFS=4;
 CFW=3;
 CFE=3;
 
