@@ -89,8 +89,8 @@ end
 
 % Estabelece ponto monitor segundo x e y (IMON e JMON)
 %%%%% Alterável %%%%%
-IMON=3;
-JMON=3;
+IMON=22;
+JMON=22;
 
 % Propriedades do material (Tcond=cond,CV=calor esp,DENSIT=dens), 
 % Meio homogéneo
@@ -115,7 +115,7 @@ TINIC=1150;
 % Número máximo de iterações
 MAXIT=300;
 % Número máximo de interações no tempo 
-MAXSTP=100;
+MAXSTP=300;
 % O output deverá conter os valores de T em intervalos de
 NITPRI=300;
 % "NITPRI" para "NSTPRI" iterações no tempo
@@ -202,6 +202,9 @@ PRINT(1,1,NI,NJ,X,Y,T,fid)
 fprintf (fid,'NITER        SOURCE        T (%d,%d)    TIME(s)     DT(s)    NSTEP',IMON,JMON);
 fprintf (fid,'\r \n');
 
+Temperatura = zeros(MAXSTP,3);
+
+
 % Iterações no tempo
 for NSTEP=1:MAXSTP
     TIME=TIME+DT;
@@ -259,10 +262,14 @@ for NSTEP=1:MAXSTP
             error ('myApp:argChk','Não Convergiu segundo o critério especificado \n')
         end
         
-        
+
     % Termina ciclo no espaço
     end
-    
+
+    Temperatura(NSTEP,1) = T(IMON,JMON);    
+    Temperatura(NSTEP,2) = TIME;
+    Temperatura(NSTEP,3) = NITER;
+
     fprintf (fid,'\r \n \r \n \r \n');
     
     % Imprime a solução convergida no intervalo especificado por NSTPRI
@@ -316,3 +323,19 @@ colorbar;
 xlabel('\bfx')
 ylabel('\bfy')
 zlabel('\bfT')
+
+theta_star = (Temperatura(:,1) - 20)/(TINIC-20);
+L = 3;
+alpha = TCON(1,1)/(DENSIT(1,1)*CV(1,1));
+V_corpo = H*W*L;
+A_corpo = H*W*2 + H*L*2 + W*L*2;
+L_c = V_corpo/A_corpo;
+
+Fourier = (alpha*Temperatura(:,2))/L_c^2;
+
+figure();
+plot(Fourier,theta_star)
+ylim([-0.1 1])
+title(['Temperatura adimensionalizada (\theta^*) em função do Número de Fourier para T(',num2str(IMON),',',num2str(JMON),')'],'FontSize',14);
+xlabel('N{\''{u}}mero de Fourier','Interpreter','latex','FontSize',14)
+ylabel('$\theta^*$','Interpreter','latex','FontSize',16)
