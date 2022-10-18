@@ -15,21 +15,39 @@ v = 39.6*10^-6;
 
 %% alinea a) - lumped capacitance method
 V_corpo = H*W*L;
-A_corpo = H*W*2 + H*L*2 + W*L*2;
+A_corpo = H*W*2 + H*L*2 + W*L;
 L_c = V_corpo/A_corpo;
 
 Bi = h*L_c/k;
 
-t_lcm = linspace(0, 2000, 100);
+t_lcm = linspace(0, 8000, 200);
 theta_star_lcm = @(t_lcm)exp(-h*A_corpo/(ro*V_corpo*c).*t_lcm);
 figure()
 plot(t_lcm, theta_star_lcm(t_lcm));
 
+%% alinea b) - cálculo dos csi's
+% Bi = [0.2479 0.4959 3.0992];
+Bi = 3.0992
+csi = 0
 
-%o método é este mas eu não sei se está bem fazer só isto e também nao sei
-%como buscar para os diversos pontos que ele pede nem como considerar a
-%superfice inferior adiabática
 
+fun = @(csi)csi*tan(csi)-Bi;
+j=1;
+for i=1:50
+    out = fzero(fun, i-1);
+    if abs(fun(out))<0.05
+        if j==1
+            csi(j)=out;
+            j = j+1;
+        else if out ~= csi(j-1)
+                csi(j) = out;
+                j= j+1;
+            end
+        end
+    end
+end
+
+csi
 %% alinea b) - solução exata
 
 alpha = k/(ro*c);
@@ -53,16 +71,19 @@ figure()
 plot(t, theta_star_x);
 ylabel("$\theta*$ em x=0", 'Interpreter','latex', 'FontSize', 18)
 xlabel("tempo [t]", 'FontSize', 12)
+close
 
 figure()
 plot(t, theta_star_y);
 ylabel("$\theta*$  em y=0.5", 'Interpreter','latex', 'FontSize', 18)
 xlabel("tempo [t]", 'FontSize', 12)
+close
 
 figure()
 plot(t, theta_star_x.*theta_star_y);
 ylabel("$\theta*$  em 2D no centro do corpo", 'Interpreter','latex', 'FontSize', 18)
 xlabel("tempo [t]", 'FontSize', 12)
+close
 
 x = [0 0.2 0.4 0.6 0.8 1];
 y = [0.5 0.6 0.7 0.8 0.9 1];
@@ -88,7 +109,7 @@ plot(y, theta_estrela, '.', 'markersize', 20)
 legend({'x=0','x=0.2','x=0.4','x=0.6','x=0.8','x=1'},'Location','northeast','Orientation','vertical')
 ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
 xlabel("y [adimensional]", 'FontSize', 12)
-
+close
 
 
 
