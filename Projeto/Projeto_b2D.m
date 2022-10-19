@@ -51,11 +51,11 @@ y = linspace(0.5, 1, 20);
 theta_estrela_x = 0;
 theta_estrela_y = 0;
 
-theta_estrela = zeros(6,6);
+%theta_estrela = zeros(6,6);
 
 for i=1:length(x)
     for j=1:length(y)
-        for p=1:4
+        for p=1:7
             C_x(p) = 4*sin(ksi_x(p))/(2*ksi_x(p) + sin(2*ksi_x(p)));
             C_y(p) = 4*sin(ksi_y(p))/(2*ksi_y(p) + sin(2*ksi_y(p)));
             theta_estrela_x = theta_estrela_x + C_x(p)*exp(-ksi_x(p)^2*alpha*500/(H/2)^2)*cos(ksi_x(p)*x(i));
@@ -89,7 +89,7 @@ t = linspace(0, 8000, 10);
 for i=1:2
     for k=1:2
         for j=1:10
-            for p=1:4
+            for p=1:7
                 C_x(p) = 4*sin(ksi_x(p))/(2*ksi_x(p) + sin(2*ksi_x(p)));
                 C_y(p) = 4*sin(ksi_y(p))/(2*ksi_y(p) + sin(2*ksi_y(p)));
                 theta_estrela_x = theta_estrela_x + C_x(p)*exp(-ksi_x(p)^2*alpha*t(j)/(H/2)^2)*cos(ksi_x(p)*x(i));
@@ -111,7 +111,7 @@ end
 t = linspace(0, 8000, 200);
 for i=1:2
     for k=1:2
-            for p=1:4
+            for p=1:7
                 C_x(p) = 4*sin(ksi_x(p))/(2*ksi_x(p) + sin(2*ksi_x(p)));
                 C_y(p) = 4*sin(ksi_y(p))/(2*ksi_y(p) + sin(2*ksi_y(p)));
                 theta_estrela_x = theta_estrela_x + C_x(p)*exp(-ksi_x(p)^2*alpha.*t/(H/2)^2)*cos(ksi_x(p)*x(i));
