@@ -60,7 +60,7 @@ theta_estrela_z = 0;
 for k=1:length(z)
     for i=1:length(x)
         for j=1:length(y)
-            for p=1:10
+            for p=1:length(ksi_x)
                 C_x(p) = 4*sin(ksi_x(p))/(2*ksi_x(p) + sin(2*ksi_x(p)));
                 C_y(p) = 4*sin(ksi_y(p))/(2*ksi_y(p) + sin(2*ksi_y(p)));
                 C_z(p) = 4*sin(ksi_z(p))/(2*ksi_z(p) + sin(2*ksi_z(p)));
@@ -99,7 +99,7 @@ for i=1:2
         figure()
         for w=1:length(t)
             for k=1:length(z)
-                for p=1:10
+                for p=1:length(ksi_x)
                     C_x(p) = 4*sin(ksi_x(p))/(2*ksi_x(p) + sin(2*ksi_x(p)));
                     C_y(p) = 4*sin(ksi_y(p))/(2*ksi_y(p) + sin(2*ksi_y(p)));
                     C_z(p) = 4*sin(ksi_z(p))/(2*ksi_z(p) + sin(2*ksi_z(p)));
@@ -112,7 +112,7 @@ for i=1:2
                 theta_estrela_y = 0;
                 theta_estrela_z = 0;
             end
-            plot(z, theta_estrela, '.', 'markersize', 20)
+            plot(z, theta_estrela,'.', 'markersize', 20)
             legend({'t=1 s','t=250 s','t=500 s','t=750 s','t=1000 s'},'Location','best','Orientation','vertical')
             ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
             xlabel("z [adimensional]", 'FontSize', 12)
