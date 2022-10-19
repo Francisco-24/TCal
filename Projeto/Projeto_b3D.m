@@ -21,7 +21,7 @@ Bi_y = h*L_y/k;
 Bi_z = h*L_z/k;
 
 %% alinea b) - cálculo dos csi's
-Bi = [Bi_x Bi_y Bi_z];
+Bi = [Bi_x Bi_y Bi_z]
 
 
 for l=1:3
@@ -50,7 +50,7 @@ ksi_y = [0.6510 3.2911 6.3610 9.4771 12.6057 15.7395 18.8758 22.0137 25.1525 28.
 ksi_z = [1.2011 3.8228 6.7156 9.7330 12.8039 15.9005 19.0112 22.1303 25.2548 28.3831];
 
 x = linspace(0, 1, 6);
-y = linspace(0.5, 1, 6);
+y = linspace(0.5, 1, 20);
 z = linspace(0, 1, 5);
 theta_estrela_x = 0;
 theta_estrela_y = 0;
@@ -58,6 +58,7 @@ theta_estrela_z = 0;
 
 %for em que para cada gráfico existe um único z
 for k=1:length(z)
+%     figure()
     for i=1:length(x)
         for j=1:length(y)
             for p=1:length(ksi_x)
@@ -68,11 +69,17 @@ for k=1:length(z)
                 theta_estrela_y = theta_estrela_y + C_y(p)*exp(-ksi_y(p)^2*alpha*500/(W)^2)*cos(ksi_y(p)*y(j));
                 theta_estrela_z = theta_estrela_z + C_z(p)*exp(-ksi_y(p)^2*alpha*500/(L/2)^2)*cos(ksi_z(p)*z(k));
             end
-            theta_estrela(i,j) = theta_estrela_x*theta_estrela_y*theta_estrela_z;
+            theta_estrela(j,i) = theta_estrela_x*theta_estrela_y*theta_estrela_z;
+            theta_teste(j) = theta_estrela_x*theta_estrela_y;
             theta_estrela_x = 0;
             theta_estrela_y = 0;
             theta_estrela_z = 0;
         end
+%         plot(y, theta_teste, '.', 'markersize', 20)
+%         legend({'x=0','x=0.2','x=0.4','x=0.6','x=0.8','x=1'},'Location','northeast','Orientation','vertical')
+%         ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
+%         xlabel("y [adimensional]", 'FontSize', 12)
+%         hold on
     end
 
 figure()
@@ -86,7 +93,7 @@ end
 x = [0 1];
 y = [0 0.5 1];
 z = linspace(0, 1, 40);
-t = linspace(1, 1000, 5);
+t = linspace(1, 3000, 5);
 theta_estrela_x = 0;
 theta_estrela_y = 0;
 theta_estrela_z = 0;
