@@ -35,13 +35,13 @@ fid=fopen ('RESULTS.txt','w');
 
 % Define o número de nós da malha segundo x e y
 %%%%% Alterável %%%%%
-IT=44;
-JT=44;
+IT=22;
+JT=22;
 
 % Define o número de pontos da malha segundo x e y
 %%%%% Alterável %%%%%
-NI=44;
-NJ=44;
+NI=22;
+NJ=22;
 
 % Constante
 GREAT=1.0E30;
@@ -89,8 +89,8 @@ end
 
 % Estabelece ponto monitor segundo x e y (IMON e JMON)
 %%%%% Alterável %%%%%
-IMON=22;
-JMON=22;
+IMON=2;
+JMON=21;
 
 % Propriedades do material (Tcond=cond,CV=calor esp,DENSIT=dens), 
 % Meio homogéneo
@@ -154,8 +154,8 @@ TIME=0.0;
 %%%%% Alterável %%%%%
 TTOP=20;
 TBOT=1150;
-TLEFT=0;
-TRIGHT=0;
+TLEFT=20;
+TRIGHT=20;
  
 for I=2:NIM1
     T (I,1)=TBOT;
