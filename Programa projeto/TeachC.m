@@ -23,6 +23,7 @@
 
 % Apaga variáveis e limpa a consola
 clear all
+close all
 clc
 
 % Utiliza o formato longo (15 dígitos) para maior precisão
@@ -35,13 +36,13 @@ fid=fopen ('RESULTS.txt','w');
 
 % Define o número de nós da malha segundo x e y
 %%%%% Alterável %%%%%
-IT=22;
-JT=22;
+IT=42;
+JT=42;
 
 % Define o número de pontos da malha segundo x e y
 %%%%% Alterável %%%%%
-NI=22;
-NJ=22;
+NI=42;
+NJ=42;
 
 % Constante
 GREAT=1.0E30;
@@ -90,7 +91,7 @@ end
 % Estabelece ponto monitor segundo x e y (IMON e JMON)
 %%%%% Alterável %%%%%
 IMON=2;
-JMON=21;
+JMON=11;
 
 % Propriedades do material (Tcond=cond,CV=calor esp,DENSIT=dens), 
 % Meio homogéneo
@@ -202,7 +203,7 @@ PRINT(1,1,NI,NJ,X,Y,T,fid)
 fprintf (fid,'NITER        SOURCE        T (%d,%d)    TIME(s)     DT(s)    NSTEP',IMON,JMON);
 fprintf (fid,'\r \n');
 
-Temperatura = zeros(MAXSTP,3);
+Temperatura = zeros(MAXSTP,2);
 
 
 % Iterações no tempo
@@ -268,8 +269,7 @@ for NSTEP=1:MAXSTP
 
     Temperatura(NSTEP,1) = T(IMON,JMON);    
     Temperatura(NSTEP,2) = TIME;
-    Temperatura(NSTEP,3) = NITER;
-
+    
     fprintf (fid,'\r \n \r \n \r \n');
     
     % Imprime a solução convergida no intervalo especificado por NSTPRI
