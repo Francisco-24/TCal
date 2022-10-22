@@ -27,13 +27,13 @@ Bi = [Bi_x Bi_y Bi_z]
 for l=1:3
     fun = @(csi)csi*tan(csi)-Bi(l);
     j=1;
-    for i=1:50
+    for i=1:200
         out = fzero(fun, i-1);
         if abs(fun(out))<0.05
             if j==1
                 csi(l,j)=out;
                 j = j+1;
-            else if out ~= csi(l,j-1)
+            else if out ~= csi(l,j-1) && out-csi(l,j-1)>0.5
                     csi(l,j) = out;
                     j= j+1;
                 end
@@ -41,13 +41,24 @@ for l=1:3
         end
     end
 end
-csi
+csi;
+
 
 %% Solução exata - 3D
 
-ksi_x = [0.4782 3.2185 6.3224 9.4510 12.5861 15.7237 18.8627 22.0024 25.1426 28.2831];
-ksi_y = [0.6510 3.2911 6.3610 9.4771 12.6057 15.7395 18.8758 22.0137 25.1525 28.2919];
-ksi_z = [1.2011 3.8228 6.7156 9.7330 12.8039 15.9005 19.0112 22.1303 25.2548 28.3831];
+ksi_x = [0.4782 3.2185 6.3224 9.4510 12.5861 15.7237 18.8627 22.0024 25.1426 28.2831]
+ksi_y = [0.6510 3.2911 6.3610 9.4771 12.6057 15.7395 18.8758 22.0137 25.1525 28.2919]
+ksi_z = [1.2011 3.8228 6.7156 9.7330 12.8039 15.9005 19.0112 22.1303 25.2548 28.3831]
+
+for i=1:20
+    ksi_x(i)=csi(1,i+1);
+    ksi_y(i)=csi(2,i+1);
+    ksi_z(i)=csi(3,i+1);
+end
+
+ksi_x 
+ksi_y 
+ksi_z 
 
 x = linspace(0, 1, 6);
 y = linspace(0, 1, 20);
@@ -67,7 +78,7 @@ for k=1:length(z)
                 C_z(p) = 4*sin(ksi_z(p))/(2*ksi_z(p) + sin(2*ksi_z(p)));
                 theta_estrela_x = theta_estrela_x + C_x(p)*exp(-ksi_x(p)^2*alpha*500/(H/2)^2)*cos(ksi_x(p)*x(i));
                 theta_estrela_y = theta_estrela_y + C_y(p)*exp(-ksi_y(p)^2*alpha*500/(W)^2)*cos(ksi_y(p)*y(j));
-                theta_estrela_z = theta_estrela_z + C_z(p)*exp(-ksi_y(p)^2*alpha*500/(L/2)^2)*cos(ksi_z(p)*z(k));
+                theta_estrela_z = theta_estrela_z + C_z(p)*exp(-ksi_z(p)^2*alpha*500/(L/2)^2)*cos(ksi_z(p)*z(k));
             end
             theta_estrela(j,i) = theta_estrela_x*theta_estrela_y*theta_estrela_z;
             theta_teste(j) = theta_estrela_x*theta_estrela_y;
@@ -112,7 +123,7 @@ for i=1:2
                     C_z(p) = 4*sin(ksi_z(p))/(2*ksi_z(p) + sin(2*ksi_z(p)));
                     theta_estrela_x = theta_estrela_x + C_x(p)*exp(-ksi_x(p)^2*alpha*t(w)/(H/2)^2)*cos(ksi_x(p)*x(i));
                     theta_estrela_y = theta_estrela_y + C_y(p)*exp(-ksi_y(p)^2*alpha*t(w)/(W)^2)*cos(ksi_y(p)*y(j));
-                    theta_estrela_z = theta_estrela_z + C_z(p)*exp(-ksi_y(p)^2*alpha*t(w)/(L/2)^2)*cos(ksi_z(p)*z(k));
+                    theta_estrela_z = theta_estrela_z + C_z(p)*exp(-ksi_z(p)^2*alpha*t(w)/(L/2)^2)*cos(ksi_z(p)*z(k));
                 end
                 theta_estrela(k) = theta_estrela_x*theta_estrela_y*theta_estrela_z;
                 theta_estrela_x = 0;
@@ -120,7 +131,7 @@ for i=1:2
                 theta_estrela_z = 0;
             end
             plot(z, theta_estrela,'.', 'markersize', 20)
-            legend({'t=1 s','t=250 s','t=500 s','t=750 s','t=1000 s'},'Location','best','Orientation','vertical')
+            %legend({'t=1 s','t=250 s','t=500 s','t=750 s','t=1000 s'},'Location','best','Orientation','vertical')
             ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
             xlabel("z [adimensional]", 'FontSize', 12)
             title(['x = ',num2str(x(i)),' y =',num2str(y(j))])
@@ -129,3 +140,39 @@ for i=1:2
     end
 end
 
+V_corpo = H*W*L;
+A_corpo = H*W*2 + H*L*2 + W*L;
+x = [0 1];
+y = [0 0.5 1];
+theta_estrela_x = 0;
+theta_estrela_y = 0;
+theta_estrela_z = 0;
+theta_estrela = 0;
+z = [0 1];
+t = linspace(0, 4000, 200);
+for k=1:length(z)
+    for i=1:2
+        for j=1:3
+            for p=1:length(ksi_x)
+                C_x(p) = 4*sin(ksi_x(p))/(2*ksi_x(p) + sin(2*ksi_x(p)));
+                C_y(p) = 4*sin(ksi_y(p))/(2*ksi_y(p) + sin(2*ksi_y(p)));
+                C_z(p) = 4*sin(ksi_z(p))/(2*ksi_z(p) + sin(2*ksi_z(p)));
+                theta_estrela_x = theta_estrela_x + C_x(p)*exp(-ksi_x(p)^2*alpha.*t/(H/2)^2)*cos(ksi_x(p)*x(i));
+                theta_estrela_y = theta_estrela_y + C_y(p)*exp(-ksi_y(p)^2*alpha.*t/(W)^2)*cos(ksi_y(p)*y(j));
+                theta_estrela_z = theta_estrela_z + C_z(p)*exp(-ksi_z(p)^2*alpha.*t/(L/2)^2)*cos(ksi_z(p)*z(k));
+            end
+            theta_estrela_2D = theta_estrela_x.*theta_estrela_y;
+            theta_estrela_3D = theta_estrela_x.*theta_estrela_y.*theta_estrela_z;
+            theta_star_lcm = exp(-h*A_corpo/(ro*V_corpo*c).*t);
+            theta_estrela_x = 0;
+            theta_estrela_y = 0;
+            theta_estrela_z = 0;
+            figure()
+            plot(t, theta_estrela_2D,'--',t, theta_estrela_3D, '+', t, theta_star_lcm)
+            legend(sprintf('x = %g, y = %g 2D', x(i), y(j)),sprintf('x = %g, y = %g, z = %g 3D', x(i), y(j), z(k)), sprintf('LCM'),'Location','northeast','Orientation','vertical')
+            ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
+            xlabel("t", 'FontSize', 12)
+            hold on
+        end
+    end
+end

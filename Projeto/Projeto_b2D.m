@@ -39,12 +39,19 @@ for l=1:2
         end
     end
 end
-csi
+csi;
 
 %% Solução exata - 2D
 
-ksi_x = [0.4782 3.2185 6.3224  9.4510 12.5861 15.7237 18.8627];
-ksi_y = [0.6510 3.2911 6.3610  9.4771 12.6057 15.7395 18.8758];
+% ksi_x = [0.4782 3.2185 6.3224  9.4510 12.5861 15.7237 18.8627]
+% ksi_y = [0.6510 3.2911 6.3610  9.4771 12.6057 15.7395 18.8758]
+for i=1:20
+    ksi_x(i)=csi(1,i+1);
+    ksi_y(i)=csi(2,i+1);
+end
+
+ksi_x;
+ksi_y;
 
 x = linspace(0, 1, 6);
 y = linspace(0, 1, 20);
@@ -55,7 +62,7 @@ theta_estrela_y = 0;
 figure()
 for i=1:length(x)
     for j=1:length(y)
-        for p=1:7
+        for p=1:length(ksi_x)
             C_x(p) = 4*sin(ksi_x(p))/(2*ksi_x(p) + sin(2*ksi_x(p)));
             C_y(p) = 4*sin(ksi_y(p))/(2*ksi_y(p) + sin(2*ksi_y(p)));
             theta_estrela_x = theta_estrela_x + C_x(p)*exp(-ksi_x(p)^2*alpha*60/(H/2)^2)*cos(ksi_x(p)*x(i));
@@ -95,7 +102,7 @@ t = linspace(0, 8000, 10);
 for i=1:2
     for k=1:2
         for j=1:10
-            for p=1:7
+            for p=1:length(ksi_x)
                 C_x(p) = 4*sin(ksi_x(p))/(2*ksi_x(p) + sin(2*ksi_x(p)));
                 C_y(p) = 4*sin(ksi_y(p))/(2*ksi_y(p) + sin(2*ksi_y(p)));
                 theta_estrela_x = theta_estrela_x + C_x(p)*exp(-ksi_x(p)^2*alpha*t(j)/(H/2)^2)*cos(ksi_x(p)*x(i));
@@ -117,7 +124,7 @@ end
 t = linspace(0, 8000, 200);
 for i=1:2
     for k=1:2
-            for p=1:7
+            for p=1:length(ksi_x)
                 C_x(p) = 4*sin(ksi_x(p))/(2*ksi_x(p) + sin(2*ksi_x(p)));
                 C_y(p) = 4*sin(ksi_y(p))/(2*ksi_y(p) + sin(2*ksi_y(p)));
                 theta_estrela_x = theta_estrela_x + C_x(p)*exp(-ksi_x(p)^2*alpha.*t/(H/2)^2)*cos(ksi_x(p)*x(i));
