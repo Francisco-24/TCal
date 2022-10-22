@@ -20,18 +20,18 @@ Bi_y = h*L_y/k
 
 %% alinea b) - cálculo dos csi's
 Bi = [Bi_x Bi_y];
-csi = zeros(2,50)
+
 
 for l=1:2
     fun = @(csi)csi*tan(csi)-Bi(l);
     j=1;
-    for i=1:50
+    for i=1:200
         out = fzero(fun, i-1);
         if abs(fun(out))<0.05
             if j==1
                 csi(l,j)=out;
                 j = j+1;
-            else if out ~= csi(l,j-1)
+            else if out ~= csi(l,j-1) && out-csi(l,j-1)>0.5
                     csi(l,j) = out;
                     j= j+1;
                 end
@@ -66,7 +66,7 @@ for i=1:length(x)
         theta_estrela_x = 0;
         theta_estrela_y = 0;
     end
-    plot(y1, theta_teste, '.', 'markersize', 20)
+    plot(y, theta_teste, '.', 'markersize', 20)
     legend({'x=0','x=0.2','x=0.4','x=0.6','x=0.8','x=1'},'Location','northeast','Orientation','vertical')
     ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
     xlabel("y [adimensional]", 'FontSize', 12)
@@ -110,7 +110,7 @@ for i=1:2
         legend(sprintf('x = %g, y = %g', x(i), y(k)),'Location','northeast','Orientation','vertical')
         ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
         xlabel("t", 'FontSize', 12)
-        close
+        
     end
 end
 

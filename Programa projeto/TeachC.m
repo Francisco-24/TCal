@@ -339,3 +339,49 @@ ylim([-0.1 1])
 title(['Temperatura adimensionalizada (\theta^*) em função do Número de Fourier para T(',num2str(IMON),',',num2str(JMON),')'],'FontSize',14);
 xlabel('N{\''{u}}mero de Fourier','Interpreter','latex','FontSize',14)
 ylabel('$\theta^*$','Interpreter','latex','FontSize',16)
+
+%% invençoes do francisco
+
+% H = 0.24; 
+% W = 0.24; 
+% L = 3.00; 
+% h = 250; %W/m^2K
+% T_in = 1150; %ºC
+% T_amb = 20;
+% ro = 7930;
+% c = 385;
+% k = 121;
+% v = 39.6*10^-6;
+% alpha = k/(ro*c);
+% L_x = 0.12;
+% L_y = 0.24;
+% Bi_x = h*L_x/k
+% Bi_y = h*L_y/k
+% 
+% ksi_x = [0.4782 3.2185 6.3224  9.4510 12.5861 15.7237 18.8627];
+% ksi_y = [0.6510 3.2911 6.3610  9.4771 12.6057 15.7395 18.8758];
+% 
+% x=1;
+% y=1;
+% theta_estrela = 0;
+% theta_estrela_x = 0;
+% theta_estrela_y = 0;
+% t = linspace(0, 8000, 200);
+% 
+% for p=1:7
+%     C_x(p) = 4*sin(ksi_x(p))/(2*ksi_x(p) + sin(2*ksi_x(p)));
+%     C_y(p) = 4*sin(ksi_y(p))/(2*ksi_y(p) + sin(2*ksi_y(p)));
+%     theta_estrela_x = theta_estrela_x + C_x(p)*exp(-ksi_x(p)^2*alpha.*t/(H/2)^2)*cos(ksi_x(p)*x);
+%     theta_estrela_y = theta_estrela_y + C_y(p)*exp(-ksi_y(p)^2*alpha.*t/(W)^2)*cos(ksi_y(p)*y);
+% end
+% theta_estrela = theta_estrela_x.*theta_estrela_y;
+% 
+% figure()
+% plot(t, theta_estrela,'--')
+% hold on 
+% 
+% plot(Temperatura(:,2),theta_star)
+% ylim([-0.1 1])
+% title(['Temperatura adimensionalizada (\theta^*) em função de t T(',num2str(IMON),',',num2str(JMON),')'],'FontSize',14);
+% xlabel('tempo t','Interpreter','latex','FontSize',14)
+% ylabel('$\theta^*$','Interpreter','latex','FontSize',16)
