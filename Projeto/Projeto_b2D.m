@@ -58,15 +58,15 @@ for i=1:length(x)
         for p=1:7
             C_x(p) = 4*sin(ksi_x(p))/(2*ksi_x(p) + sin(2*ksi_x(p)));
             C_y(p) = 4*sin(ksi_y(p))/(2*ksi_y(p) + sin(2*ksi_y(p)));
-            theta_estrela_x = theta_estrela_x + C_x(p)*exp(-ksi_x(p)^2*alpha*500/(H/2)^2)*cos(ksi_x(p)*x(i));
-            theta_estrela_y = theta_estrela_y + C_y(p)*exp(-ksi_y(p)^2*alpha*500/(W)^2)*cos(ksi_y(p)*y(j));
+            theta_estrela_x = theta_estrela_x + C_x(p)*exp(-ksi_x(p)^2*alpha*60/(H/2)^2)*cos(ksi_x(p)*x(i));
+            theta_estrela_y = theta_estrela_y + C_y(p)*exp(-ksi_y(p)^2*alpha*60/(W)^2)*cos(ksi_y(p)*y(j));
         end
         theta_estrela(j,i) = theta_estrela_x*theta_estrela_y;
         theta_teste(j) = theta_estrela_x*theta_estrela_y;
         theta_estrela_x = 0;
         theta_estrela_y = 0;
     end
-    plot(y, theta_teste, '.', 'markersize', 20)
+    plot(y1, theta_teste, '.', 'markersize', 20)
     legend({'x=0','x=0.2','x=0.4','x=0.6','x=0.8','x=1'},'Location','northeast','Orientation','vertical')
     ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
     xlabel("y [adimensional]", 'FontSize', 12)
