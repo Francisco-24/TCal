@@ -155,19 +155,24 @@ TIME=0.0;
 %%%%% Alterável %%%%%
 TTOP=20;
 TBOT=1150;
-TLEFT=20;
-TRIGHT=20;
+TLEFT=0;
+TRIGHT=0;
+
+% Uma vez que de acordo com o enunciado não há temperatura imposta em
+% nenhuma das faces estes valores não irão ter importância nos resultados,
+% estando apenas a adicionar tempo de computação
+
+% for I=2:NIM1
+%     T (I,1)=TBOT;
+%     T (I,NJ)=TTOP;
+% end
+%  
+% for J=2:NJM1
+%     T (1,J)=TLEFT;
+%     T (NI,J)=TRIGHT;
+% end
  
-for I=2:NIM1
-    T (I,1)=TBOT;
-    T (I,NJ)=TTOP;
-end
- 
-for J=2:NJM1
-    T (1,J)=TLEFT;
-    T (NI,J)=TRIGHT;
-end
- 
+
 % Inicializa variável dependente
 % Inicializa campo de propriedades do material
 % Chama função PROPS
