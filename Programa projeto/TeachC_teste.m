@@ -29,6 +29,8 @@ clc
 % Utiliza o formato longo (15 dígitos) para maior precisão
 format long
 
+GRID = [12 22 42];
+for g=1:3
 % Cria ficheiro para escrever os resultados
 fid=fopen ('RESULTS.txt','w');
 
@@ -36,13 +38,13 @@ fid=fopen ('RESULTS.txt','w');
 
 % Define o número de nós da malha segundo x e y
 %%%%% Alterável %%%%%
-IT=43;
-JT=43;
+IT=GRID(g);
+JT=GRID(g);
 
 % Define o número de pontos da malha segundo x e y
 %%%%% Alterável %%%%%
-NI=43;
-NJ=43;
+NI=GRID(g);
+NJ=GRID(g);
 
 % Constante
 GREAT=1.0E30;
@@ -91,7 +93,7 @@ end
 % Estabelece ponto monitor segundo x e y (IMON e JMON)
 %%%%% Alterável %%%%%
 IMON=2;
-JMON=42;
+JMON=11;
 
 % Propriedades do material (Tcond=cond,CV=calor esp,DENSIT=dens), 
 % Meio homogéneo
@@ -116,7 +118,7 @@ TINIC=1150;
 % Número máximo de iterações
 MAXIT=300;
 % Número máximo de interações no tempo 
-MAXSTP=300;
+MAXSTP=15;
 % O output deverá conter os valores de T em intervalos de
 NITPRI=300;
 % "NITPRI" para "NSTPRI" iterações no tempo
@@ -155,24 +157,19 @@ TIME=0.0;
 %%%%% Alterável %%%%%
 TTOP=20;
 TBOT=1150;
-TLEFT=0;
-TRIGHT=0;
-
-% Uma vez que de acordo com o enunciado não há temperatura imposta em
-% nenhuma das faces estes valores não irão ter importância nos resultados,
-% estando apenas a adicionar tempo de computação
-
-% for I=2:NIM1
-%     T (I,1)=TBOT;
-%     T (I,NJ)=TTOP;
-% end
-%  
-% for J=2:NJM1
-%     T (1,J)=TLEFT;
-%     T (NI,J)=TRIGHT;
-% end
+TLEFT=20;
+TRIGHT=20;
  
-
+for I=2:NIM1
+    T (I,1)=TBOT;
+    T (I,NJ)=TTOP;
+end
+ 
+for J=2:NJM1
+    T (1,J)=TLEFT;
+    T (NI,J)=TRIGHT;
+end
+ 
 % Inicializa variável dependente
 % Inicializa campo de propriedades do material
 % Chama função PROPS
@@ -273,15 +270,61 @@ for NSTEP=1:MAXSTP
 
     % Termina ciclo no espaço
     end
-
-    Temperatura_monitor(NSTEP,1) = T(IMON,JMON);    
-    Temperatura_monitor(NSTEP,2) = TIME;
-    Temperatura_centrogeo(NSTEP,1) = T(22,22);
-    Temperatura_centrogeo(NSTEP,2) = TIME;
-    Temperatura_centrosurfN(NSTEP,1) = T(22,42);
-    Temperatura_centrosurfN(NSTEP,2) = TIME;
-    Temperatura_centrosurfO(NSTEP,1) = T(2,22);
-    Temperatura_centrosurfO(NSTEP,2) = TIME;
+    pos = [0 0.12 0.24]
+    if g==1
+        x = [2,GRID(g)/2, GRID(g)-1];
+        y = linspace(2,GRID(g), 11);
+        for q=1:3
+            for w=1:11
+                temp12(q,w) = T(x(q),y(w));
+            end
+        end
+        figure()
+        plot(pos, temp12 , '.', 'markersize', 20)
+        legend({sprintf('grid = %g time = %g', GRID(g), TIME)},'Location','northeast','Orientation','vertical')
+        ylabel("", 'Interpreter','latex', 'FontSize', 18)
+        xlabel("", 'FontSize', 12)
+        
+    else if g==2
+            x = [2,GRID(g)/2, GRID(g)-1];
+            y = linspace(2,GRID(g), 11);
+            for q=1:3
+                for w=1:11
+                    temp22(q,w) = T(x(q),y(w));
+                end
+            end
+            figure()
+            plot(pos, temp22 , '.', 'markersize', 20)
+            legend({sprintf('grid = %g time = %g', GRID(g), TIME)},'Location','northeast','Orientation','vertical')
+            ylabel("", 'Interpreter','latex', 'FontSize', 18)
+            xlabel("", 'FontSize', 12)
+            
+        else if g==3
+                x = [2,GRID(g)/2, GRID(g)-1];
+                y = linspace(2,GRID(g), 11);
+                for q=1:3
+                    for w=1:11
+                        temp42(q,w) = T(x(q),y(w));
+                    end
+                end
+                figure()
+                plot(pos, temp42 , '.', 'markersize', 20)
+                legend({sprintf('grid = %g time = %g', GRID(g), TIME)},'Location','northeast','Orientation','vertical')
+                ylabel("", 'Interpreter','latex', 'FontSize', 18)
+                xlabel("", 'FontSize', 12)      
+            end
+        end
+    end
+    
+    
+%     Temperatura_monitor(NSTEP,1) = T(IMON,JMON);    
+%     Temperatura_monitor(NSTEP,2) = TIME;
+%     Temperatura_centrogeo(NSTEP,1) = T(22,22);
+%     Temperatura_centrogeo(NSTEP,2) = TIME;
+%     Temperatura_centrosurfN(NSTEP,1) = T(22,42);
+%     Temperatura_centrosurfN(NSTEP,2) = TIME;
+%     Temperatura_centrosurfO(NSTEP,1) = T(2,22);
+%     Temperatura_centrosurfO(NSTEP,2) = TIME;
 
     
     
@@ -301,6 +344,8 @@ for NSTEP=1:MAXSTP
     
 % Termina ciclo no tempo
 end
+
+
 
 fclose(fid);
 
@@ -331,60 +376,62 @@ THI2=THI2(2:end-1,2:end-1);
 X=X(2:end-1,2:end-1);
 Y=Y(2:end-1,2:end-1);
 
-figure(1)
+figure()
 % O número 10 remete para as cores utilizadas
 contourf (X,Y,THI2,10);
 colorbar;
 xlabel('\bfx')
 ylabel('\bfy')
 zlabel('\bfT')
+close
 
-theta_star_monitor = (Temperatura_monitor(:,1) - 20)/(TINIC-20);
-L = 3;
-alpha = TCON(1,1)/(DENSIT(1,1)*CV(1,1));
-V_corpo = H*W*L;
-A_corpo = H*W*2 + H*L*2 + W*L*2;
-L_c = V_corpo/A_corpo;
-
-Fourier = (alpha*Temperatura_monitor(:,2))/L_c^2;
-
-figure();
-plot(Fourier,theta_star_monitor)
-ylim([-0.1 1])
-title(['Temperatura adimensionalizada (\theta^*) em função do Número de Fourier para T(',num2str(IMON),',',num2str(JMON),')'],'FontSize',14);
-xlabel('N{\''{u}}mero de Fourier','Interpreter','latex','FontSize',14)
-ylabel('$\theta^*$','Interpreter','latex','FontSize',16)
-
-
-theta_star_centrogeo = (Temperatura_centrogeo(:,1) -20)/(TINIC-20);
-
-figure();
-plot(Fourier,theta_star_centrogeo)
-ylim([-0.1 1])
-title(['Temperatura adimensionalizada (\theta^*) em função do Número de Fourier para T(22,22)'],'FontSize',14);
-xlabel('N{\''{u}}mero de Fourier','Interpreter','latex','FontSize',14)
-ylabel('$\theta^*$','Interpreter','latex','FontSize',16)
-
-
-theta_star_centrosurfN = (Temperatura_centrosurfN(:,1) -20)/(TINIC-20);
-
-figure();
-plot(Fourier,theta_star_centrosurfN)
-ylim([-0.1 1])
-title(['Temperatura adimensionalizada (\theta^*) em função do Número de Fourier para T(22,42)'],'FontSize',14);
-xlabel('N{\''{u}}mero de Fourier','Interpreter','latex','FontSize',14)
-ylabel('$\theta^*$','Interpreter','latex','FontSize',16)
-
-
-theta_star_centrosurfO = (Temperatura_centrosurfO(:,1) -20)/(TINIC-20);
-
-figure();
-plot(Fourier,theta_star_centrosurfO)
-ylim([-0.1 1])
-title(['Temperatura adimensionalizada (\theta^*) em função do Número de Fourier para T(2,22)'],'FontSize',14);
-xlabel('N{\''{u}}mero de Fourier','Interpreter','latex','FontSize',14)
-ylabel('$\theta^*$','Interpreter','latex','FontSize',16)
+% theta_star_monitor = (Temperatura_monitor(:,1) - 20)/(TINIC-20);
+% L = 3;
+% alpha = TCON(1,1)/(DENSIT(1,1)*CV(1,1));
+% V_corpo = H*W*L;
+% A_corpo = H*W*2 + H*L*2 + W*L*2;
+% L_c = V_corpo/A_corpo;
+% 
+% Fourier = (alpha*Temperatura_monitor(:,2))/L_c^2;
+% 
+% figure();
+% plot(Fourier,theta_star_monitor)
+% ylim([-0.1 1])
+% title(['Temperatura adimensionalizada (\theta^*) em função do Número de Fourier para T(',num2str(IMON),',',num2str(JMON),')'],'FontSize',14);
+% xlabel('N{\''{u}}mero de Fourier','Interpreter','latex','FontSize',14)
+% ylabel('$\theta^*$','Interpreter','latex','FontSize',16)
+% 
+% 
+% theta_star_centrogeo = (Temperatura_centrogeo(:,1) -20)/(TINIC-20);
+% 
+% figure();
+% plot(Fourier,theta_star_centrogeo)
+% ylim([-0.1 1])
+% title(['Temperatura adimensionalizada (\theta^*) em função do Número de Fourier para T(22,22)'],'FontSize',14);
+% xlabel('N{\''{u}}mero de Fourier','Interpreter','latex','FontSize',14)
+% ylabel('$\theta^*$','Interpreter','latex','FontSize',16)
+% 
+% 
+% theta_star_centrosurfN = (Temperatura_centrosurfN(:,1) -20)/(TINIC-20);
+% 
+% figure();
+% plot(Fourier,theta_star_centrosurfN)
+% ylim([-0.1 1])
+% title(['Temperatura adimensionalizada (\theta^*) em função do Número de Fourier para T(22,42)'],'FontSize',14);
+% xlabel('N{\''{u}}mero de Fourier','Interpreter','latex','FontSize',14)
+% ylabel('$\theta^*$','Interpreter','latex','FontSize',16)
+% 
+% 
+% theta_star_centrosurfO = (Temperatura_centrosurfO(:,1) -20)/(TINIC-20);
+% 
+% figure();
+% plot(Fourier,theta_star_centrosurfO)
+% ylim([-0.1 1])
+% title(['Temperatura adimensionalizada (\theta^*) em função do Número de Fourier para T(2,22)'],'FontSize',14);
+% xlabel('N{\''{u}}mero de Fourier','Interpreter','latex','FontSize',14)
+% ylabel('$\theta^*$','Interpreter','latex','FontSize',16)
 %% invençoes do francisco
+
 % H = 0.24; 
 % W = 0.24; 
 % L = 3.00; 
@@ -398,99 +445,35 @@ ylabel('$\theta^*$','Interpreter','latex','FontSize',16)
 % alpha = k/(ro*c);
 % L_x = 0.12;
 % L_y = 0.24;
-% L_z = 1.50;
-% Bi_x = h*L_x/k;
-% Bi_y = h*L_y/k;
-% Bi_z = h*L_z/k;
+% Bi_x = h*L_x/k
+% Bi_y = h*L_y/k
 % 
-% Bi = [Bi_x Bi_y Bi_z]
+% ksi_x = [0.4782 3.2185 6.3224  9.4510 12.5861 15.7237 18.8627];
+% ksi_y = [0.6510 3.2911 6.3610  9.4771 12.6057 15.7395 18.8758];
 % 
-% 
-% for l=1:3
-%     fun = @(csi)csi*tan(csi)-Bi(l);
-%     j=1;
-%     for i=1:200
-%         out = fzero(fun, i-1);
-%         if abs(fun(out))<0.05
-%             if j==1
-%                 csi(l,j)=out;
-%                 j = j+1;
-%             else if out ~= csi(l,j-1) && out-csi(l,j-1)>0.5
-%                     csi(l,j) = out;
-%                     j= j+1;
-%                 end
-%             end
-%         end
-%     end
-% end
-% 
-% for i=1:20
-%     ksi_x(i)=csi(1,i+1);
-%     ksi_y(i)=csi(2,i+1);
-%     ksi_z(i)=csi(3,i+1);
-% end
-% x = linspace(0, 1, 6);
-% y = linspace(0, 1, 20);
-% z = linspace(0, 1, 5);
-% theta_estrela_x = 0;
-% theta_estrela_y = 0;
-% theta_estrela_z = 0;
-% 
-% V_corpo = H*W*L;
-% A_corpo = H*W*2 + H*L*2 + W*L;
-% x = [0 1];
-% y = [0 0.5 1];
-% theta_estrela_x = 0;
-% theta_estrela_y = 0;
-% theta_estrela_z = 0;
+% x=1;
+% y=1;
 % theta_estrela = 0;
-% z = [0 1];
-% t = linspace(0, 4000, 200);
-% for k=1:length(z)
-%     for i=1:2
-%         for j=1:3
-%             for p=1:length(ksi_x)
-%                 C_x(p) = 4*sin(ksi_x(p))/(2*ksi_x(p) + sin(2*ksi_x(p)));
-%                 C_y(p) = 4*sin(ksi_y(p))/(2*ksi_y(p) + sin(2*ksi_y(p)));
-%                 C_z(p) = 4*sin(ksi_z(p))/(2*ksi_z(p) + sin(2*ksi_z(p)));
-%                 theta_estrela_x = theta_estrela_x + C_x(p)*exp(-ksi_x(p)^2*alpha.*t/(H/2)^2)*cos(ksi_x(p)*x(i));
-%                 theta_estrela_y = theta_estrela_y + C_y(p)*exp(-ksi_y(p)^2*alpha.*t/(W)^2)*cos(ksi_y(p)*y(j));
-%                 theta_estrela_z = theta_estrela_z + C_z(p)*exp(-ksi_z(p)^2*alpha.*t/(L/2)^2)*cos(ksi_z(p)*z(k));
-%             end
-%             theta_estrela_2D = theta_estrela_x.*theta_estrela_y;
-%             theta_estrela_3D = theta_estrela_x.*theta_estrela_y.*theta_estrela_z;
-%             theta_star_lcm = exp(-h*A_corpo/(ro*V_corpo*c).*t);
-%             erro_2D_3_D = abs(theta_estrela_3D - theta_estrela_2D);
-%             erro_LCM_3D = abs(theta_star_lcm - theta_estrela_3D);
-%             theta_estrela_x = 0;
-%             theta_estrela_y = 0;
-%             theta_estrela_z = 0;
-%             figure()
-%             if i==1 && j==2
-%                 plot(t, theta_estrela_2D,'--',t, theta_estrela_3D, '+', t, theta_star_lcm,'+', Temperatura_monitor(:,2),theta_star_centrogeo)
-%                 legend(sprintf('x = %g, y = %g 2D', x(i), y(j)),sprintf('x = %g, y = %g, z = %g 3D', x(i), y(j), z(k)), sprintf('LCM'), 'Teach C','Location','northeast','Orientation','vertical')
-%                 ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
-%                 xlabel("t", 'FontSize', 12)
-%             else if i==1 && j==3
-%                     plot(t, theta_estrela_2D,'--',t, theta_estrela_3D, '+', t, theta_star_lcm,'+', Temperatura_monitor(:,2),theta_star_centrosurfN)
-%                     legend(sprintf('x = %g, y = %g 2D', x(i), y(j)),sprintf('x = %g, y = %g, z = %g 3D', x(i), y(j), z(k)), sprintf('LCM'), 'Teach C','Location','northeast','Orientation','vertical')
-%                     ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
-%                     xlabel("t", 'FontSize', 12)
-%                 else if i==2 && j==2
-%                         plot(t, theta_estrela_2D,'--',t, theta_estrela_3D, '+', t, theta_star_lcm,'+', Temperatura_monitor(:,2),theta_star_centrosurfO)
-%                         legend(sprintf('x = %g, y = %g 2D', x(i), y(j)),sprintf('x = %g, y = %g, z = %g 3D', x(i), y(j), z(k)), sprintf('LCM'), 'Teach C','Location','northeast','Orientation','vertical')
-%                         ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
-%                         xlabel("t", 'FontSize', 12)
-%                     else
-%                         plot(t, theta_estrela_2D,'--',t, theta_estrela_3D, '+', t, theta_star_lcm,'+')
-%                         legend(sprintf('x = %g, y = %g 2D', x(i), y(j)),sprintf('x = %g, y = %g, z = %g 3D', x(i), y(j), z(k)), sprintf('LCM'),'Location','northeast','Orientation','vertical')
-%                         ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
-%                         xlabel("t", 'FontSize', 12)
-%                     end
-%                 end
-%             end
-%         end
-%     end
+% theta_estrela_x = 0;
+% theta_estrela_y = 0;
+% t = linspace(0, 8000, 200);
+% 
+% for p=1:7
+%     C_x(p) = 4*sin(ksi_x(p))/(2*ksi_x(p) + sin(2*ksi_x(p)));
+%     C_y(p) = 4*sin(ksi_y(p))/(2*ksi_y(p) + sin(2*ksi_y(p)));
+%     theta_estrela_x = theta_estrela_x + C_x(p)*exp(-ksi_x(p)^2*alpha.*t/(H/2)^2)*cos(ksi_x(p)*x);
+%     theta_estrela_y = theta_estrela_y + C_y(p)*exp(-ksi_y(p)^2*alpha.*t/(W)^2)*cos(ksi_y(p)*y);
 % end
+% theta_estrela = theta_estrela_x.*theta_estrela_y;
+% 
+% figure()
+% plot(t, theta_estrela,'--')
+% hold on 
+% 
+% plot(Temperatura(:,2),theta_star)
+% ylim([-0.1 1])
+% title(['Temperatura adimensionalizada (\theta^*) em função de t T(',num2str(IMON),',',num2str(JMON),')'],'FontSize',14);
+% xlabel('tempo t','Interpreter','latex','FontSize',14)
+% ylabel('$\theta^*$','Interpreter','latex','FontSize',16)
 
-
+end

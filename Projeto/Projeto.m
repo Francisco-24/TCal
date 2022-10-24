@@ -12,18 +12,21 @@ ro = 7930;
 c = 385;
 k = 121;
 v = 39.6*10^-6;
+alpha = k/(ro*c);
 
 %% alinea a) - lumped capacitance method
-V_corpo = H*W*L;
-A_corpo = H*W*2 + H*L*2 + W*L;
-L_c = V_corpo/A_corpo;
+V_corpo = H*W*L
+A_corpo = H*W*2 + H*L*2 + W*L
+L_c = V_corpo/A_corpo
 
-Bi = h*L_c/k;
+Bi = h*L_c/k
 
-t_lcm = linspace(0, 8000, 200);
+t_lcm = linspace(0, 5000, 200);
 theta_star_lcm = @(t_lcm)exp(-h*A_corpo/(ro*V_corpo*c).*t_lcm);
 figure()
-plot(t_lcm, theta_star_lcm(t_lcm));
+plot(t_lcm*alpha/L_c^2, theta_star_lcm(t_lcm));
+ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
+xlabel("Número de Fourier", 'FontSize', 12)
 
 %% alinea b) - cálculo dos csi's
 % Bi = [0.2479 0.4959 3.0992];

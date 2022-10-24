@@ -113,10 +113,10 @@ for i=1:2
         theta_estrela_y = 0;
         end
         figure()
-        plot(t, theta_estrela, '.', 'markersize', 20)
+        plot(t*alpha/(H/2)^2, theta_estrela, '.', 'markersize', 20)
         legend(sprintf('x = %g, y = %g', x(i), y(k)),'Location','northeast','Orientation','vertical')
         ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
-        xlabel("t", 'FontSize', 12)
+        xlabel("Fo", 'FontSize', 12)
         
     end
 end
@@ -134,10 +134,10 @@ for i=1:2
         theta_estrela_x = 0;
         theta_estrela_y = 0;
         figure()
-        plot(t, theta_estrela)
+        plot(t*alpha/(H/2)^2, theta_estrela)
         legend(sprintf('x = %g, y = %g', x(i), y(k)),'Location','northeast','Orientation','vertical')
         ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
-        xlabel("t", 'FontSize', 12)
+        xlabel("Fo", 'FontSize', 12)
         hold on
     end
 end

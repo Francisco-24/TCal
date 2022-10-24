@@ -130,7 +130,7 @@ for i=1:2
                 theta_estrela_y = 0;
                 theta_estrela_z = 0;
             end
-            plot(z, theta_estrela,'.', 'markersize', 20)
+            plot(z, theta_estrela)
             %legend({'t=1 s','t=250 s','t=500 s','t=750 s','t=1000 s'},'Location','best','Orientation','vertical')
             ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
             xlabel("z [adimensional]", 'FontSize', 12)
@@ -164,15 +164,59 @@ for k=1:length(z)
             theta_estrela_2D = theta_estrela_x.*theta_estrela_y;
             theta_estrela_3D = theta_estrela_x.*theta_estrela_y.*theta_estrela_z;
             theta_star_lcm = exp(-h*A_corpo/(ro*V_corpo*c).*t);
+            erro_2D_3_D = abs(theta_estrela_3D - theta_estrela_2D);
+            erro_LCM_3D = abs(theta_star_lcm - theta_estrela_3D);
             theta_estrela_x = 0;
             theta_estrela_y = 0;
             theta_estrela_z = 0;
             figure()
-            plot(t, theta_estrela_2D,'--',t, theta_estrela_3D, '+', t, theta_star_lcm)
+            plot(t*alpha/(H/2)^2, theta_estrela_2D,'--',t*alpha/(H/2)^2, theta_estrela_3D, '+', t*alpha/(H/2)^2, theta_star_lcm)
             legend(sprintf('x = %g, y = %g 2D', x(i), y(j)),sprintf('x = %g, y = %g, z = %g 3D', x(i), y(j), z(k)), sprintf('LCM'),'Location','northeast','Orientation','vertical')
             ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
-            xlabel("t", 'FontSize', 12)
+            xlabel("Fo", 'FontSize', 12)
             hold on
         end
     end
 end
+
+%% erros
+V_corpo = H*W*L;
+A_corpo = H*W*2 + H*L*2 + W*L;
+x = [0 1];
+y = [0 0.5 1];
+theta_estrela_x = 0;
+theta_estrela_y = 0;
+theta_estrela_z = 0;
+theta_estrela = 0;
+z = [0 1];
+t = linspace(0, 4000, 200);
+for k=1:length(z)
+    for i=1:2
+        for j=1:3
+            for p=1:length(ksi_x)
+                C_x(p) = 4*sin(ksi_x(p))/(2*ksi_x(p) + sin(2*ksi_x(p)));
+                C_y(p) = 4*sin(ksi_y(p))/(2*ksi_y(p) + sin(2*ksi_y(p)));
+                C_z(p) = 4*sin(ksi_z(p))/(2*ksi_z(p) + sin(2*ksi_z(p)));
+                theta_estrela_x = theta_estrela_x + C_x(p)*exp(-ksi_x(p)^2*alpha.*t/(H/2)^2)*cos(ksi_x(p)*x(i));
+                theta_estrela_y = theta_estrela_y + C_y(p)*exp(-ksi_y(p)^2*alpha.*t/(W)^2)*cos(ksi_y(p)*y(j));
+                theta_estrela_z = theta_estrela_z + C_z(p)*exp(-ksi_z(p)^2*alpha.*t/(L/2)^2)*cos(ksi_z(p)*z(k));
+            end
+            theta_estrela_2D = theta_estrela_x.*theta_estrela_y;
+            theta_estrela_3D = theta_estrela_x.*theta_estrela_y.*theta_estrela_z;
+            theta_star_lcm = exp(-h*A_corpo/(ro*V_corpo*c).*t);
+            erro_2D_3_D = abs(theta_estrela_3D - theta_estrela_2D);
+            erro_LCM_3D = abs(theta_star_lcm - theta_estrela_3D);
+            theta_estrela_x = 0;
+            theta_estrela_y = 0;
+            theta_estrela_z = 0;
+            figure()
+            plot(t,erro_2D_3_D,'--', t,erro_LCM_3D,'+')
+            title(sprintf('x = %g, y = %g, z = %g 3D', x(i), y(j), z(k)))
+            legend('ERRO 2D','ERRO LCM','Location','northeast','Orientation','vertical')
+            ylabel("ERRO", 'Interpreter','latex', 'FontSize', 18)
+            xlabel("t", 'FontSize', 12)
+            
+        end
+    end
+end
+
