@@ -116,7 +116,7 @@ TINIC=1150;
 % Número máximo de iterações
 MAXIT=300;
 % Número máximo de interações no tempo 
-MAXSTP=6;
+MAXSTP=300;
 % O output deverá conter os valores de T em intervalos de
 NITPRI=300;
 % "NITPRI" para "NSTPRI" iterações no tempo
@@ -207,11 +207,11 @@ Temperatura_monitor = zeros(MAXSTP,2);
 Temperatura_centrogeo = zeros(MAXSTP,2);
 Temperatura_centrosurfN = zeros(MAXSTP,2);
 Temperatura_centrosurfO = zeros(MAXSTP,2);
-TIMEN = [100,300,500,1500,3000,5000];
+
 
 % Iterações no tempo
-for NSTEP = 1:length(TIMEN)
-    TIME = TIMEN(NSTEP);
+for NSTEP=1:MAXSTP
+    TIME=TIME+DT;
     for I=1:NI
         for J=1:NJ
             TOLD(I,J)=T(I,J);
