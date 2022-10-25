@@ -29,8 +29,6 @@ clc
 % Utiliza o formato longo (15 dígitos) para maior precisão
 format long
 
-GRID = [12 22 42];
-for g=1:3
 % Cria ficheiro para escrever os resultados
 fid=fopen ('RESULTS.txt','w');
 
@@ -38,13 +36,13 @@ fid=fopen ('RESULTS.txt','w');
 
 % Define o número de nós da malha segundo x e y
 %%%%% Alterável %%%%%
-IT=GRID(g);
-JT=GRID(g);
+IT=43;
+JT=43;
 
 % Define o número de pontos da malha segundo x e y
 %%%%% Alterável %%%%%
-NI=GRID(g);
-NJ=GRID(g);
+NI=43;
+NJ=43;
 
 % Constante
 GREAT=1.0E30;
@@ -118,7 +116,7 @@ TINIC=1150;
 % Número máximo de iterações
 MAXIT=300;
 % Número máximo de interações no tempo 
-MAXSTP=15;
+MAXSTP=6;
 % O output deverá conter os valores de T em intervalos de
 NITPRI=300;
 % "NITPRI" para "NSTPRI" iterações no tempo
@@ -209,10 +207,11 @@ Temperatura_monitor = zeros(MAXSTP,2);
 Temperatura_centrogeo = zeros(MAXSTP,2);
 Temperatura_centrosurfN = zeros(MAXSTP,2);
 Temperatura_centrosurfO = zeros(MAXSTP,2);
+TIMEN = [100,300,500,1500,3000,5000];
 
 % Iterações no tempo
-for NSTEP=1:MAXSTP
-    TIME=TIME+DT;
+for NSTEP = 1:length(TIMEN)
+    TIME = TIMEN(NSTEP);
     for I=1:NI
         for J=1:NJ
             TOLD(I,J)=T(I,J);
@@ -270,7 +269,7 @@ for NSTEP=1:MAXSTP
 
     % Termina ciclo no espaço
     end
-    pos = [0 0.12 0.24]
+    pos = [0 0.12 0.24];
     if g==1
         x = [2,GRID(g)/2, GRID(g)-1];
         y = linspace(2,GRID(g), 11);
@@ -476,4 +475,3 @@ close
 % xlabel('tempo t','Interpreter','latex','FontSize',14)
 % ylabel('$\theta^*$','Interpreter','latex','FontSize',16)
 
-end
