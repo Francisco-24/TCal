@@ -36,13 +36,13 @@ fid=fopen ('RESULTS.txt','w');
 
 % Define o número de nós da malha segundo x e y
 %%%%% Alterável %%%%%
-IT=12;
-JT=12;
+IT=82;
+JT=82;
 
 % Define o número de pontos da malha segundo x e y
 %%%%% Alterável %%%%%
-NI=12;
-NJ=12;
+NI=82;
+NJ=82;
 
 % Constante
 GREAT=1.0E30;
@@ -212,9 +212,9 @@ Temperatura_monitor = zeros(MAXSTP,2);
 Temperatura_centrogeo = zeros(MAXSTP,2);
 Temperatura_centrosurfN = zeros(MAXSTP,2);
 Temperatura_centrosurfO = zeros(MAXSTP,2);
-Tmesh = zeros(6,2,9);
+Tmesh = zeros(8,2,9);
 c = 1;
-Pts_grid = [2,11;2,6;2,2;4,11;4,6;4,2;6,11;6,6;6,2];
+Pts_grid = [5,78;6,77;5,38;6,37;5,6;6,5;21,78;22,77;21,38;22,37;21,6;22,5;37,78;38,77;37,38;38,37;37,6;38,5];
 
 % Iterações no tempo
 for NSTEP=1:MAXSTP
@@ -279,28 +279,30 @@ for NSTEP=1:MAXSTP
 
 
 
-    if NSTEP == 3 || NSTEP == 6 || NSTEP == 25 || NSTEP == 100 || NSTEP == 150 || NSTEP == 250
+    if NSTEP == 3 || NSTEP == 6 || NSTEP == 25 || NSTEP == 50 || NSTEP == 100 || NSTEP == 150 || NSTEP == 200 || NSTEP == 250
                
-        Tmesh(c,1,1) = T(Pts_grid(1,1),Pts_grid(1,2));
+        Tmesh(c,1,1) = (T(Pts_grid(1,1),Pts_grid(1,2))+T(Pts_grid(2,1),Pts_grid(2,2)))/2;
         Tmesh(c,2,1) = TIME;
-        Tmesh(c,1,2) = T(Pts_grid(2,1),Pts_grid(2,2));
+        Tmesh(c,1,2) = (T(Pts_grid(3,1),Pts_grid(3,2))+T(Pts_grid(4,1),Pts_grid(4,2)))/2;
         Tmesh(c,2,2) = TIME;
-        Tmesh(c,1,3) = T(Pts_grid(3,1),Pts_grid(3,2));
+        Tmesh(c,1,3) = (T(Pts_grid(5,1),Pts_grid(5,2))+T(Pts_grid(6,1),Pts_grid(6,2)))/2;
         Tmesh(c,2,3) = TIME;
-        Tmesh(c,1,4) = T(Pts_grid(4,1),Pts_grid(4,2));
+        Tmesh(c,1,4) = (T(Pts_grid(7,1),Pts_grid(7,2))+T(Pts_grid(8,1),Pts_grid(8,2)))/2;
         Tmesh(c,2,4) = TIME;
-        Tmesh(c,1,5) = T(Pts_grid(5,1),Pts_grid(5,2));
+        Tmesh(c,1,5) = (T(Pts_grid(9,1),Pts_grid(9,2))+T(Pts_grid(10,1),Pts_grid(10,2)))/2;
         Tmesh(c,2,5) = TIME;
-        Tmesh(c,1,6) = T(Pts_grid(6,1),Pts_grid(6,2));
+        Tmesh(c,1,6) = (T(Pts_grid(11,1),Pts_grid(11,2))+T(Pts_grid(12,1),Pts_grid(12,2)))/2;
         Tmesh(c,2,6) = TIME;
-        Tmesh(c,1,7) = T(Pts_grid(7,1),Pts_grid(7,2));
+        Tmesh(c,1,7) = (T(Pts_grid(13,1),Pts_grid(13,2))+T(Pts_grid(14,1),Pts_grid(14,2)))/2;
         Tmesh(c,2,7) = TIME;
-        Tmesh(c,1,8) = T(Pts_grid(8,1),Pts_grid(8,2));
+        Tmesh(c,1,8) = (T(Pts_grid(15,1),Pts_grid(15,2))+T(Pts_grid(16,1),Pts_grid(16,2)))/2;
         Tmesh(c,2,8) = TIME;
-        Tmesh(c,1,9) = T(Pts_grid(9,1),Pts_grid(9,2));
+        Tmesh(c,1,9) = (T(Pts_grid(17,1),Pts_grid(17,2))+T(Pts_grid(18,1),Pts_grid(18,2)))/2;
         Tmesh(c,2,9) = TIME;
         c = c+1;
     end
+    
+    
 
 %     Temperatura_monitor(NSTEP,1) = T(IMON,JMON);    
 %     Temperatura_monitor(NSTEP,2) = TIME;
@@ -328,6 +330,11 @@ for NSTEP=1:MAXSTP
     end
     
 % Termina ciclo no tempo
+end
+
+for sheet = 1:9
+        filename = 'Grid_independency.xlsx';
+        writematrix(Tmesh(:,:,sheet), filename,'Sheet',sheet,'Range', 'M4:N11')
 end
 
 fclose(fid);
