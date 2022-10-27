@@ -121,6 +121,7 @@ t = linspace(0, 8000, 10);
 %     end
 % end
 
+
 t = linspace(0, 6000, 600);
 for i=1:2
     for k=1:2
@@ -191,6 +192,34 @@ for i=1:2
         hold on
     end
 end
+
+%% Estudo da independência da malha
+
+x_ad = [0.108 0.060 0.0120]/L_x; %Atenção que aqui 0.108 é no teachC 0.0120 e vice versa
+y_ad = [0.2280 0.1080 0.0120]/L_y; %Aqui não
+t = [60 120 500 1000 2000 3000 4000 5000];
+h=1;
+theta_estrela_x = 0;
+theta_estrela_y = 0;
+
+for i=1:3
+    for k=1:3
+        for j=1:8
+            for p=1:length(ksi_x)
+                C_x(p) = 4*sin(ksi_x(p))/(2*ksi_x(p) + sin(2*ksi_x(p)));
+                C_y(p) = 4*sin(ksi_y(p))/(2*ksi_y(p) + sin(2*ksi_y(p)));
+                theta_estrela_x = theta_estrela_x + C_x(p)*exp(-ksi_x(p)^2*alpha*t(j)/(H/2)^2)*cos(ksi_x(p)*x_ad(i));
+                theta_estrela_y = theta_estrela_y + C_y(p)*exp(-ksi_y(p)^2*alpha*t(j)/(W)^2)*cos(ksi_y(p)*y_ad(k));
+            end
+        theta_estrelap(h,j) = theta_estrela_x*theta_estrela_y;    
+        theta_estrela_x = 0;
+        theta_estrela_y = 0;      
+        end
+        h=h+1;
+    end
+end
+
+
 
 
    
