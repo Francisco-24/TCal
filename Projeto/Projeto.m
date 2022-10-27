@@ -21,12 +21,13 @@ L_c = V_corpo/A_corpo
 
 Bi = h*L_c/k
 
-t_lcm = linspace(0, 5000, 200);
+t_lcm = linspace(0, 6000, 300);
 theta_star_lcm = @(t_lcm)exp(-h*A_corpo/(ro*V_corpo*c).*t_lcm);
 figure()
-plot(t_lcm*alpha/L_c^2, theta_star_lcm(t_lcm));
+plot(t_lcm*alpha/(H/2)^2, theta_star_lcm(t_lcm));
+title('Método da Capacitância Global')
 ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
-xlabel("Número de Fourier", 'FontSize', 12)
+xlabel("Fo", 'FontSize', 12)
 
 %% alinea b) - cálculo dos csi's
 % Bi = [0.2479 0.4959 3.0992];

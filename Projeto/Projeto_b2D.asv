@@ -183,9 +183,9 @@ for i=1:2
         theta_estrela_x = 0;
         theta_estrela_y = 0;
         figure()
-        plot(t*alpha/(H/2)^2, theta_estrela_20,t*alpha/(H/2)^2, theta_estrela_10,t*alpha/(H/2)^2,theta_estrela_5,t*alpha/(H/2)^2,theta_estrela_1)
+        plot(t*alpha/(H/2)^2, theta_estrela_20,t*alpha/(H/2)^2,theta_estrela_5,t*alpha/(H/2)^2,theta_estrela_1)
         title('Solução analítica 2D')
-        legend(sprintf('x = %g, y = %g 20 termos', x(i), y(k)),sprintf('x = %g, y = %g 10 termos', x(i), y(k)),sprintf('x = %g, y = %g 5 termos', x(i), y(k)),sprintf('x = %g, y = %g 1 termo', x(i), y(k)),'Location','northeast','Orientation','vertical')
+        legend(sprintf('x = %g, y = %g 20 termos', x(i), y(k)),sprintf('x = %g, y = %g 5 termos', x(i), y(k)),sprintf('x = %g, y = %g 1 termo', x(i), y(k)),'Location','northeast','Orientation','vertical')
         ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
         xlabel("Fo", 'FontSize', 12)
         hold on
