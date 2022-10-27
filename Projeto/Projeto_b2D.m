@@ -15,12 +15,11 @@ v = 39.6*10^-6;
 alpha = k/(ro*c);
 L_x = 0.12;
 L_y = 0.24;
-Bi_x = h*L_x/k
-Bi_y = h*L_y/k
+Bi_x = h*L_x/k;
+Bi_y = h*L_y/k;
 
 %% alinea b) - cálculo dos csi's
 Bi = [Bi_x Bi_y];
-
 
 for l=1:2
     fun = @(csi)csi*tan(csi)-Bi(l);
@@ -43,85 +42,16 @@ csi;
 
 %% Solução exata - 2D
 
-% ksi_x = [0.4782 3.2185 6.3224  9.4510 12.5861 15.7237 18.8627]
-% ksi_y = [0.6510 3.2911 6.3610  9.4771 12.6057 15.7395 18.8758]
 for i=1:20
     ksi_x(i)=csi(1,i+1);
     ksi_y(i)=csi(2,i+1);
 end
 
-ksi_x;
-ksi_y;
-
-x = linspace(0, 1, 6);
-y = linspace(0, 1, 20);
 theta_estrela_x = 0;
 theta_estrela_y = 0;
-
-% %theta_estrela = zeros(6,6);
-% figure()
-% for i=1:length(x)
-%     for j=1:length(y)
-%         for p=1:length(ksi_x)
-%             C_x(p) = 4*sin(ksi_x(p))/(2*ksi_x(p) + sin(2*ksi_x(p)));
-%             C_y(p) = 4*sin(ksi_y(p))/(2*ksi_y(p) + sin(2*ksi_y(p)));
-%             theta_estrela_x = theta_estrela_x + C_x(p)*exp(-ksi_x(p)^2*alpha*60/(H/2)^2)*cos(ksi_x(p)*x(i));
-%             theta_estrela_y = theta_estrela_y + C_y(p)*exp(-ksi_y(p)^2*alpha*60/(W)^2)*cos(ksi_y(p)*y(j));
-%         end
-%         theta_estrela(j,i) = theta_estrela_x*theta_estrela_y;
-%         theta_teste(j) = theta_estrela_x*theta_estrela_y;
-%         theta_estrela_x = 0;
-%         theta_estrela_y = 0;
-%     end
-%     plot(y, theta_teste, '.', 'markersize', 20)
-%     legend({'x=0','x=0.2','x=0.4','x=0.6','x=0.8','x=1'},'Location','northeast','Orientation','vertical')
-%     ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
-%     xlabel("y [adimensional]", 'FontSize', 12)
-%     hold on
-% end
-
-% figure()
-% plot(y, theta_estrela, '.', 'markersize', 20)
-% legend({'x=0','x=0.2','x=0.4','x=0.6','x=0.8','x=1'},'Location','northeast','Orientation','vertical')
-% ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
-% xlabel("y [adimensional]", 'FontSize', 12)
-% 
-% 
-% figure()
-% surf(x, y, theta_estrela);
-% shading interp
-% xlabel("x*", 'FontSize', 12)
-% ylabel("y*", 'FontSize', 12)
-% zlabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
-
 x=[0 1];
 y=[0.5 1];
 theta_estrela = 0;
-
-t = linspace(0, 8000, 10);
-% for i=1:2
-%     for k=1:2
-%         for j=1:10
-%             for p=1:length(ksi_x)
-%                 C_x(p) = 4*sin(ksi_x(p))/(2*ksi_x(p) + sin(2*ksi_x(p)));
-%                 C_y(p) = 4*sin(ksi_y(p))/(2*ksi_y(p) + sin(2*ksi_y(p)));
-%                 theta_estrela_x = theta_estrela_x + C_x(p)*exp(-ksi_x(p)^2*alpha*t(j)/(H/2)^2)*cos(ksi_x(p)*x(i));
-%                 theta_estrela_y = theta_estrela_y + C_y(p)*exp(-ksi_y(p)^2*alpha*t(j)/(W)^2)*cos(ksi_y(p)*y(k));
-%             end
-%         theta_estrela(j) = theta_estrela_x*theta_estrela_y;
-%         theta_estrela_x = 0;
-%         theta_estrela_y = 0;
-%         end
-%         figure()
-%         plot(t*alpha/(H/2)^2, theta_estrela, '.', 'markersize', 20)
-%         legend(sprintf('x = %g, y = %g', x(i), y(k)),'Location','northeast','Orientation','vertical')
-%         ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
-%         xlabel("Fo", 'FontSize', 12)
-%         
-%     end
-% end
-
-
 t = linspace(0, 6000, 600);
 for i=1:2
     for k=1:2
@@ -137,7 +67,7 @@ for i=1:2
         figure()
         plot(t*alpha/(H/2)^2, theta_estrela)
         title('Solução analítica 2D')
-        legend(sprintf('x = %g, y = %g', x(i), y(k)),'Location','northeast','Orientation','vertical')
+        legend(sprintf('x* = %g, y* = %g', x(i), y(k)),'Location','northeast','Orientation','vertical')
         ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
         xlabel("Fo", 'FontSize', 12)
         hold on
@@ -184,9 +114,9 @@ for i=1:2
         theta_estrela_x = 0;
         theta_estrela_y = 0;
         figure()
-        plot(t*alpha/(H/2)^2, theta_estrela_20,t*alpha/(H/2)^2, theta_estrela_10,t*alpha/(H/2)^2,theta_estrela_5,t*alpha/(H/2)^2,theta_estrela_1)
+        plot(t*alpha/(H/2)^2, theta_estrela_20,t*alpha/(H/2)^2, theta_estrela_10,t*alpha/(H/2)^2,theta_estrela_5,t*alpha/(H/2)^2,theta_estrela_1,'LineWidth',1.1)
         title('Solução analítica 2D')
-        legend(sprintf('x = %g, y = %g 20 termos', x(i), y(k)),sprintf('x = %g, y = %g 10 termos', x(i), y(k)),sprintf('x = %g, y = %g 5 termos', x(i), y(k)),sprintf('x = %g, y = %g 1 termo', x(i), y(k)),'Location','northeast','Orientation','vertical')
+        legend(sprintf('x* = %g, y* = %g 20 termos', x(i), y(k)),sprintf('x* = %g, y* = %g 10 termos', x(i), y(k)),sprintf('x* = %g, y* = %g 5 termos', x(i), y(k)),sprintf('x* = %g, y* = %g 1 termo', x(i), y(k)),'Location','northeast','Orientation','vertical')
         ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
         xlabel("Fo", 'FontSize', 12)
         hold on
@@ -195,8 +125,8 @@ end
 
 %% Estudo da independência da malha
 
-x_ad = [0.108 0.060 0.0120]/L_x; %Atenção que aqui 0.108 é no teachC 0.0120 e vice versa
-y_ad = [0.2280 0.1080 0.0120]/L_y; %Aqui não
+x_ad = [0.108 0.060 0.0120]/L_x; 
+y_ad = [0.2280 0.1080 0.0120]/L_y; 
 t = [60 120 500 1000 2000 3000 4000 5000];
 h=1;
 theta_estrela_x = 0;
@@ -211,7 +141,7 @@ for i=1:3
                 theta_estrela_x = theta_estrela_x + C_x(p)*exp(-ksi_x(p)^2*alpha*t(j)/(H/2)^2)*cos(ksi_x(p)*x_ad(i));
                 theta_estrela_y = theta_estrela_y + C_y(p)*exp(-ksi_y(p)^2*alpha*t(j)/(W)^2)*cos(ksi_y(p)*y_ad(k));
             end
-        theta_estrelap(h,j) = theta_estrela_x*theta_estrela_y;    
+        T(h,j) = theta_estrela_x*theta_estrela_y*(T_in-T_amb)+T_amb;    
         theta_estrela_x = 0;
         theta_estrela_y = 0;      
         end
