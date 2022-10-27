@@ -36,13 +36,13 @@ fid=fopen ('RESULTS.txt','w');
 
 % Define o número de nós da malha segundo x e y
 %%%%% Alterável %%%%%
-IT=82;
-JT=82;
+IT=63;
+JT=63;
 
 % Define o número de pontos da malha segundo x e y
 %%%%% Alterável %%%%%
-NI=82;
-NJ=82;
+NI=63;
+NJ=63;
 
 % Constante
 GREAT=1.0E30;
@@ -91,7 +91,7 @@ end
 % Estabelece ponto monitor segundo x e y (IMON e JMON)
 %%%%% Alterável %%%%%
 IMON=2;
-JMON=11;
+JMON=62;
 
 % Propriedades do material (Tcond=cond,CV=calor esp,DENSIT=dens), 
 % Meio homogéneo
@@ -114,11 +114,11 @@ TINIC=1150;
 % Parâmetros de controlo do programa
 %%%%% Alterável %%%%%
 % Número máximo de iterações
-MAXIT=300;
+MAXIT=400;
 % Número máximo de interações no tempo 
 MAXSTP=300;
 % O output deverá conter os valores de T em intervalos de
-NITPRI=300;
+NITPRI=400;
 % "NITPRI" para "NSTPRI" iterações no tempo
 NSTPRI=1;    
 
@@ -212,6 +212,7 @@ Temperatura_monitor = zeros(MAXSTP,2);
 Temperatura_centrogeo = zeros(MAXSTP,2);
 Temperatura_centrosurfN = zeros(MAXSTP,2);
 Temperatura_centrosurfO = zeros(MAXSTP,2);
+Temperatura_centrosurfS = zeros(MAXSTP,2);
 Tmesh = zeros(8,2,9);
 c = 1;
 Pts_grid = [5,78;6,77;5,38;6,37;5,6;6,5;21,78;22,77;21,38;22,37;21,6;22,5;37,78;38,77;37,38;38,37;37,6;38,5];
@@ -304,14 +305,16 @@ for NSTEP=1:MAXSTP
     
     
 
-%     Temperatura_monitor(NSTEP,1) = T(IMON,JMON);    
-%     Temperatura_monitor(NSTEP,2) = TIME;
-%     Temperatura_centrogeo(NSTEP,1) = T(22,22);
-%     Temperatura_centrogeo(NSTEP,2) = TIME;
-%     Temperatura_centrosurfN(NSTEP,1) = T(22,42);
-%     Temperatura_centrosurfN(NSTEP,2) = TIME;
-%     Temperatura_centrosurfO(NSTEP,1) = T(2,22);
-%     Temperatura_centrosurfO(NSTEP,2) = TIME;
+    Temperatura_monitor(NSTEP,1) = T(IMON,JMON);    
+    Temperatura_monitor(NSTEP,2) = TIME;
+    Temperatura_centrogeo(NSTEP,1) = T(32,32);
+    Temperatura_centrogeo(NSTEP,2) = TIME;
+    Temperatura_centrosurfN(NSTEP,1) = T(32,62);
+    Temperatura_centrosurfN(NSTEP,2) = TIME;
+    Temperatura_centrosurfO(NSTEP,1) = T(2,32);
+    Temperatura_centrosurfO(NSTEP,2) = TIME;
+    Temperatura_centrosurfS(NSTEP,1) = T(32,2);
+    Temperatura_centrosurfS(NSTEP,2) = TIME;
 
     
     
@@ -334,7 +337,7 @@ end
 
 for sheet = 1:9
         filename = 'Grid_independency.xlsx';
-        writematrix(Tmesh(:,:,sheet), filename,'Sheet',sheet,'Range', 'M4:N11')
+        writematrix(Tmesh(:,:,sheet), filename,'Sheet',sheet,'Range', 'P4:Q11')
 end
 
 fclose(fid);
@@ -374,61 +377,53 @@ xlabel('\bfx')
 ylabel('\bfy')
 zlabel('\bfT')
 
-theta_star_monitor = (Temperatura_monitor(:,1) - 20)/(TINIC-20);
+
+
+%Cálculo do número de Fourier
 L = 3;
 alpha = TCON(1,1)/(DENSIT(1,1)*CV(1,1));
-V_corpo = H*W*L;
-A_corpo = H*W*2 + H*L*2 + W*L*2;
 L_c = 0.12;
-
 Fourier = (alpha*Temperatura_monitor(:,2))/L_c^2;
 
-% figure();
-% plot(Fourier,theta_star_monitor)
-% ylim([-0.1 1])
-% title(['Temperatura adimensionalizada (\theta^*) em função do Número de Fourier para T(',num2str(IMON),',',num2str(JMON),')'],'FontSize',14);
-% xlabel('N{\''{u}}mero de Fourier','Interpreter','latex','FontSize',14)
-% ylabel('$\theta^*$','Interpreter','latex','FontSize',16)
-% 
-% 
-% theta_star_centrogeo = (Temperatura_centrogeo(:,1) -20)/(TINIC-20);
-% 
-% figure();
-% plot(Fourier,theta_star_centrogeo)
-% ylim([-0.1 1])
-% title(['Temperatura adimensionalizada (\theta^*) em função do Número de Fourier para T(22,22)'],'FontSize',14);
-% xlabel('N{\''{u}}mero de Fourier','Interpreter','latex','FontSize',14)
-% ylabel('$\theta^*$','Interpreter','latex','FontSize',16)
-% 
-% 
-% theta_star_centrosurfN = (Temperatura_centrosurfN(:,1) -20)/(TINIC-20);
-% 
-% figure();
-% plot(Fourier,theta_star_centrosurfN)
-% ylim([-0.1 1])
-% title(['Temperatura adimensionalizada (\theta^*) em função do Número de Fourier para T(22,42)'],'FontSize',14);
-% xlabel('N{\''{u}}mero de Fourier','Interpreter','latex','FontSize',14)
-% ylabel('$\theta^*$','Interpreter','latex','FontSize',16)
-% 
-% 
-% theta_star_centrosurfO = (Temperatura_centrosurfO(:,1) -20)/(TINIC-20);
-% 
-% figure();
-% plot(Fourier,theta_star_centrosurfO)
-% ylim([-0.1 1])
-% title(['Temperatura adimensionalizada (\theta^*) em função do Número de Fourier para T(2,22)'],'FontSize',14);
-% xlabel('N{\''{u}}mero de Fourier','Interpreter','latex','FontSize',14)
-% ylabel('$\theta^*$','Interpreter','latex','FontSize',16)
+%Plots
+
+theta_star_centrogeo = (Temperatura_centrogeo(:,1) -20)/(TINIC-20);
+
+figure();
+plot(Fourier,theta_star_centrogeo)
+ylim([-0.1 1])
+title(['Temperatura adimensionalizada (\theta^*) em função do Número de Fourier para T(32,32)'],'FontSize',14);
+xlabel('N{\''{u}}mero de Fourier','Interpreter','latex','FontSize',14)
+ylabel('$\theta^*$','Interpreter','latex','FontSize',16)
 
 
-for s=1:9
-    figure()
-    plot(Tmesh(:,2,s),Tmesh(:,1,s))
-    ylim([0 1150])
-    title(['Temperatura em função tempo para T(' ,num2str(Pts_grid(s,1)), ',' ,num2str(Pts_grid(s,2)), ')'],'FontSize',14);
-    xlabel('Tempo (s)','Interpreter','latex','FontSize',14)
-    ylabel('Temperatura ($^\circ$C)','Interpreter','latex','FontSize',16)
-end
+theta_star_centrosurfN = (Temperatura_centrosurfN(:,1) -20)/(TINIC-20);
+
+figure();
+plot(Fourier,theta_star_centrosurfN)
+ylim([-0.1 1])
+title(['Temperatura adimensionalizada (\theta^*) em função do Número de Fourier para T(32,62)'],'FontSize',14);
+xlabel('N{\''{u}}mero de Fourier','Interpreter','latex','FontSize',14)
+ylabel('$\theta^*$','Interpreter','latex','FontSize',16)
+
+
+theta_star_centrosurfO = (Temperatura_centrosurfO(:,1) -20)/(TINIC-20);
+
+figure();
+plot(Fourier,theta_star_centrosurfO)
+ylim([-0.1 1])
+title(['Temperatura adimensionalizada (\theta^*) em função do Número de Fourier para T(2,32)'],'FontSize',14);
+xlabel('N{\''{u}}mero de Fourier','Interpreter','latex','FontSize',14)
+ylabel('$\theta^*$','Interpreter','latex','FontSize',16)
+
+theta_star_centrosurfS = (Temperatura_centrosurfS(:,1) -20)/(TINIC-20);
+
+figure();
+plot(Fourier,theta_star_centrosurfS)
+ylim([-0.1 1])
+title(['Temperatura adimensionalizada (\theta^*) em função do Número de Fourier para T(32,2)'],'FontSize',14);
+xlabel('N{\''{u}}mero de Fourier','Interpreter','latex','FontSize',14)
+ylabel('$\theta^*$','Interpreter','latex','FontSize',16)
 
 %% invençoes do francisco
 % H = 0.24; 
