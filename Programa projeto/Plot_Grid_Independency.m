@@ -219,49 +219,49 @@ x = [12 22 42 62 82];
 
 figure()
 plot(x,EQM60)
-title(['Erros quadráticos médios em função da malha para TIME = 60s'],'FontSize',14);
-xlabel('Número de nós da malha segundo x e y','Interpreter','latex','FontSize',14);
-ylabel('Erro quadrático médio','Interpreter','latex','FontSize',14);
+title(['Erros quadráticos médios em função da malha para TIME = 60s'],'FontSize',24);
+xlabel('Número de nós da malha segundo x e y','Interpreter','latex','FontSize',24);
+ylabel('Erro quadrático médio','Interpreter','latex','FontSize',24);
 
 
 figure()
 plot(x,EQM120)
-title(['Erros quadráticos médios em função da malha para TIME = 120s'],'FontSize',14);
-xlabel('Número de nós da malha segundo x e y','Interpreter','latex','FontSize',14);
-ylabel('Erro quadrático médio','Interpreter','latex','FontSize',14);
+title(['Erros quadráticos médios em função da malha para TIME = 120s'],'FontSize',24);
+xlabel('Número de nós da malha segundo x e y','Interpreter','latex','FontSize',24);
+ylabel('Erro quadrático médio','Interpreter','latex','FontSize',24);
 
 figure()
 plot(x,EQM500)
-title(['Erros quadráticos médios em função da malha para TIME = 500s'],'FontSize',14);
-xlabel('Número de nós da malha segundo x e y','Interpreter','latex','FontSize',14);
-ylabel('Erro quadrático médio','Interpreter','latex','FontSize',14);
+title(['Erros quadráticos médios em função da malha para TIME = 500s'],'FontSize',24);
+xlabel('Número de nós da malha segundo x e y','Interpreter','latex','FontSize',24);
+ylabel('Erro quadrático médio','Interpreter','latex','FontSize',24);
 
 figure()
 plot(x,EQM1000)
-title(['Erros quadráticos médios em função da malha para TIME = 1000s'],'FontSize',14);
-xlabel('Número de nós da malha segundo x e y','Interpreter','latex','FontSize',14);
-ylabel('Erro quadrático médio','Interpreter','latex','FontSize',14);
+title(['Erros quadráticos médios em função da malha para TIME = 1000s'],'FontSize',24);
+xlabel('Número de nós da malha segundo x e y','Interpreter','latex','FontSize',24);
+ylabel('Erro quadrático médio','Interpreter','latex','FontSize',24);
 
 figure()
 plot(x,EQM2000)
-title(['Erros quadráticos médios em função da malha para TIME = 2000s'],'FontSize',14);
-xlabel('Número de nós da malha segundo x e y','Interpreter','latex','FontSize',14);
-ylabel('Erro quadrático médio','Interpreter','latex','FontSize',14);
+title(['Erros quadráticos médios em função da malha para TIME = 2000s'],'FontSize',24);
+xlabel('Número de nós da malha segundo x e y','Interpreter','latex','FontSize',24);
+ylabel('Erro quadrático médio','Interpreter','latex','FontSize',24);
 
 figure()
 plot(x,EQM3000)
-title(['Erros quadráticos médios em função da malha para TIME = 3000s'],'FontSize',14);
-xlabel('Número de nós da malha segundo x e y','Interpreter','latex','FontSize',14);
-ylabel('Erro quadrático médio','Interpreter','latex','FontSize',14);
+title(['Erros quadráticos médios em função da malha para TIME = 3000s'],'FontSize',24);
+xlabel('Número de nós da malha segundo x e y','Interpreter','latex','FontSize',24);
+ylabel('Erro quadrático médio','Interpreter','latex','FontSize',24);
 
 figure()
 plot(x,EQM4000)
-title(['Erros quadráticos médios em função da malha para TIME = 4000s'],'FontSize',14);
-xlabel('Número de nós da malha segundo x e y','Interpreter','latex','FontSize',14);
-ylabel('Erro quadrático médio','Interpreter','latex','FontSize',14);
+title(['Erros quadráticos médios em função da malha para TIME = 4000s'],'FontSize',24);
+xlabel('Número de nós da malha segundo x e y','Interpreter','latex','FontSize',24);
+ylabel('Erro quadrático médio','Interpreter','latex','FontSize',24);
 
 figure()
 plot(x,EQM5000)
-title(['Erros quadráticos médios em função da malha para TIME = 5000s'],'FontSize',14);
-xlabel('Número de nós da malha segundo x e y','Interpreter','latex','FontSize',14);
-ylabel('Erro quadrático médio','Interpreter','latex','FontSize',14);
+title(['Erros quadráticos médios em função da malha para TIME = 5000s'],'FontSize',24);
+xlabel('Número de nós da malha segundo x e y','Interpreter','latex','FontSize',24);
+ylabel('Erro quadrático médio','Interpreter','latex','FontSize',24);
