@@ -50,11 +50,11 @@ end
 theta_estrela_x = 0;
 theta_estrela_y = 0;
 x=[0 1];
-y=[0.5 1];
+y=[0 0.5 1];
 theta_estrela = 0;
 t = linspace(0, 6000, 600);
 for i=1:2
-    for k=1:2
+    for k=1:3
             for p=1:length(ksi_x)
                 C_x(p) = 4*sin(ksi_x(p))/(2*ksi_x(p) + sin(2*ksi_x(p)));
                 C_y(p) = 4*sin(ksi_y(p))/(2*ksi_y(p) + sin(2*ksi_y(p)));
@@ -65,11 +65,11 @@ for i=1:2
         theta_estrela_x = 0;
         theta_estrela_y = 0;
         figure()
-        plot(t*alpha/(H/2)^2, theta_estrela)
+        plot(t*alpha/(H/2)^2, theta_estrela,'LineWidth',1.5)
         title('Solução analítica 2D')
-        legend(sprintf('x* = %g, y* = %g', x(i), y(k)),'Location','northeast','Orientation','vertical')
-        ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
-        xlabel("Fo", 'FontSize', 12)
+        legend(sprintf('x* = %g, y* = %g', x(i), y(k)),'Location','northeast','Orientation','vertical','FontSize', 15)
+        ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 20)
+        xlabel("Fo", 'FontSize', 20)
         hold on
     end
 end
@@ -114,11 +114,11 @@ for i=1:2
         theta_estrela_x = 0;
         theta_estrela_y = 0;
         figure()
-        plot(t*alpha/(H/2)^2, theta_estrela_20,t*alpha/(H/2)^2, theta_estrela_10,t*alpha/(H/2)^2,theta_estrela_5,t*alpha/(H/2)^2,theta_estrela_1,'LineWidth',1.1)
+        plot(t*alpha/(H/2)^2, theta_estrela_20,t*alpha/(H/2)^2, theta_estrela_10,t*alpha/(H/2)^2,theta_estrela_5,t*alpha/(H/2)^2,theta_estrela_1,'LineWidth',1.5)
         title('Solução analítica 2D')
-        legend(sprintf('x* = %g, y* = %g 20 termos', x(i), y(k)),sprintf('x* = %g, y* = %g 10 termos', x(i), y(k)),sprintf('x* = %g, y* = %g 5 termos', x(i), y(k)),sprintf('x* = %g, y* = %g 1 termo', x(i), y(k)),'Location','northeast','Orientation','vertical')
-        ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
-        xlabel("Fo", 'FontSize', 12)
+        legend(sprintf('x* = %g, y* = %g 20 termos', x(i), y(k)),sprintf('x* = %g, y* = %g 10 termos', x(i), y(k)),sprintf('x* = %g, y* = %g 5 termos', x(i), y(k)),sprintf('x* = %g, y* = %g 1 termo', x(i), y(k)),'Location','northeast','Orientation','vertical','FontSize', 15)
+        ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 20)
+        xlabel("Fo", 'FontSize', 20)
         hold on
     end
 end

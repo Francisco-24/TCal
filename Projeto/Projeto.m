@@ -26,8 +26,8 @@ theta_star_lcm = @(t_lcm)exp(-h*A_corpo/(ro*V_corpo*c).*t_lcm);
 figure()
 plot(t_lcm*alpha/(H/2)^2, theta_star_lcm(t_lcm),'LineWidth',2.0);
 title('Método da Capacitância Global')
-ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
-xlabel("Fo", 'FontSize', 12)
+ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 20)
+xlabel("Fo", 'FontSize', 20)
 
 
 
