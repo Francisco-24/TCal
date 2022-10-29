@@ -15,11 +15,11 @@ v = 39.6*10^-6;
 alpha = k/(ro*c);
 
 %% alinea a) - lumped capacitance method
-V_corpo = H*W*L
-A_corpo = H*W*2 + H*L*2 + W*L
-L_c = V_corpo/A_corpo
+V_corpo = H*W*L;
+A_corpo = H*W*2 + H*L*2 + W*L;
+L_c = V_corpo/A_corpo;
 
-Bi = h*L_c/k
+Bi = h*L_c/k;
 
 t_lcm = linspace(0, 6000, 300);
 theta_star_lcm = @(t_lcm)exp(-h*A_corpo/(ro*V_corpo*c).*t_lcm);
