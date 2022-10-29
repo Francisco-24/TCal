@@ -425,7 +425,7 @@ title(['Temperatura adimensionalizada (\theta^*) em função do Número de Fourier 
 xlabel('N{\''{u}}mero de Fourier','Interpreter','latex','FontSize',14)
 ylabel('$\theta^*$','Interpreter','latex','FontSize',16)
 
-%% invençoes do francisco
+%% Método analitico && comparação
 H = 0.24; 
 W = 0.24; 
 L = 3.00; 
@@ -498,7 +498,7 @@ for k=1:length(z)
                 theta_estrela_y = theta_estrela_y + C_y(p)*exp(-ksi_y(p)^2*alpha.*t/(W)^2)*cos(ksi_y(p)*y(j));
                 theta_estrela_z = theta_estrela_z + C_z(p)*exp(-ksi_z(p)^2*alpha.*t/(L/2)^2)*cos(ksi_z(p)*z(k));
             end
-            theta_estrela_2D = theta_estrela_x.*theta_estrela_y;
+            theta_estrela_2D = theta_estrela_x.*theta_estrela_y
             theta_estrela_3D = theta_estrela_x.*theta_estrela_y.*theta_estrela_z;
             theta_star_lcm = exp(-h*A_corpo/(ro*V_corpo*c).*t);
             erro_2D_3_D = abs(theta_estrela_3D - theta_estrela_2D);
@@ -507,31 +507,55 @@ for k=1:length(z)
             theta_estrela_y = 0;
             theta_estrela_z = 0;
             figure()
-            if i==1 && j==1
-                plot(t*alpha/(H/2)^2, theta_estrela_2D,'--',t*alpha/(H/2)^2, theta_estrela_3D, '+', t*alpha/(H/2)^2, theta_star_lcm,'+', alpha*Temperatura_monitor(:,2)/L_c^2,theta_star_centrosurfS)
-                legend(sprintf('x* = %g, y* = %g 2D', x(i), y(j)),sprintf('x* = %g, y* = %g, z* = %g 3D', x(i), y(j), z(k)), sprintf('LCM'), 'Teach C','Location','northeast','Orientation','vertical')
-                ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
-                xlabel("Fo", 'FontSize', 12)
-            else if i==1 && j==2
-                    plot(t*alpha/(H/2)^2, theta_estrela_2D,'--',t*alpha/(H/2)^2, theta_estrela_3D, '+', t*alpha/(H/2)^2, theta_star_lcm,'+', alpha*Temperatura_monitor(:,2)/L_c^2,theta_star_centrogeo)
-                    legend(sprintf('x* = %g, y* = %g 2D', x(i), y(j)),sprintf('x* = %g, y* = %g, z* = %g 3D', x(i), y(j), z(k)), sprintf('LCM'), 'Teach C','Location','northeast','Orientation','vertical')
-                    ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
-                    xlabel("Fo", 'FontSize', 12)
-                else if i==1 && j==3
-                        plot(t*alpha/(H/2)^2, theta_estrela_2D,'--',t*alpha/(H/2)^2, theta_estrela_3D, '+', t*alpha/(H/2)^2, theta_star_lcm,'+', alpha*Temperatura_monitor(:,2)/L_c^2,theta_star_centrosurfN)
-                        legend(sprintf('x* = %g, y* = %g 2D', x(i), y(j)),sprintf('x* = %g, y* = %g, z* = %g 3D', x(i), y(j), z(k)), sprintf('LCM'), 'Teach C','Location','northeast','Orientation','vertical')
-                        ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
-                        xlabel("Fo", 'FontSize', 12)
-                    else if i==2 && j==2
-                            plot(t*alpha/(H/2)^2, theta_estrela_2D,'--',t*alpha/(H/2)^2, theta_estrela_3D, '+', t*alpha/(H/2)^2, theta_star_lcm,'+', alpha*Temperatura_monitor(:,2)/L_c^2,theta_star_centrosurfO)
-                            legend(sprintf('x* = %g, y* = %g 2D', x(i), y(j)),sprintf('x* = %g, y* = %g, z* = %g 3D', x(i), y(j), z(k)), sprintf('LCM'), 'Teach C','Location','northeast','Orientation','vertical')
-                            ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
-                            xlabel("Fo", 'FontSize', 12)
-                        else
-                            plot(t*alpha/(H/2)^2, theta_estrela_2D,'--',t*alpha/(H/2)^2, theta_estrela_3D, '+', t*alpha/(H/2)^2, theta_star_lcm,'+')
-                            legend(sprintf('x* = %g, y* = %g 2D', x(i), y(j)),sprintf('x* = %g, y* = %g, z* = %g 3D', x(i), y(j), z(k)), sprintf('LCM'),'Location','northeast','Orientation','vertical')
-                            ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 18)
-                            xlabel("Fo", 'FontSize', 12)
+            if i==1 && j==1 && k==1
+                plot(t*alpha/(H/2)^2, theta_estrela_2D,'r-', t*alpha/(H/2)^2, theta_star_lcm,'y-', alpha*Temperatura_monitor(:,2)/L_c^2,theta_star_centrosurfS,'b--','LineWidth',1.5)
+                legend(sprintf('x* = %g, y* = %g 2D', x(i), y(j)), sprintf('LCM'), 'Teach C','Location','northeast','Orientation','vertical','FontSize', 15)
+                ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 20)
+                xlabel("Fo", 'FontSize', 20)
+            else if i==1 && j==1 && k==2
+                    plot(t*alpha/(H/2)^2, theta_estrela_2D,'r-',t*alpha/(H/2)^2, theta_estrela_3D, 'm--', t*alpha/(H/2)^2, theta_star_lcm,'y-', alpha*Temperatura_monitor(:,2)/L_c^2,theta_star_centrosurfS,'b--','LineWidth',1.5)
+                    legend(sprintf('x* = %g, y* = %g 2D', x(i), y(j)),sprintf('x* = %g, y* = %g, z* = %g 3D', x(i), y(j), z(k)), sprintf('LCM'), 'Teach C','Location','northeast','Orientation','vertical','FontSize', 15)
+                    ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 20)
+                    xlabel("Fo", 'FontSize', 20)
+                else if i==1 && j==2 && k==1
+                        plot(t*alpha/(H/2)^2, theta_estrela_2D,'r-', t*alpha/(H/2)^2, theta_star_lcm,'y-', alpha*Temperatura_monitor(:,2)/L_c^2,theta_star_centrogeo,'b--','LineWidth',1.5)
+                        legend(sprintf('x* = %g, y* = %g 2D', x(i), y(j)), sprintf('LCM'), 'Teach C','Location','northeast','Orientation','vertical','FontSize', 15)
+                        ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 20)
+                        xlabel("Fo", 'FontSize', 20)
+                    else if i==1 && j==2 && k==2
+                            plot(t*alpha/(H/2)^2, theta_estrela_2D,'r-',t*alpha/(H/2)^2, theta_estrela_3D, 'm--', t*alpha/(H/2)^2, theta_star_lcm,'y-', alpha*Temperatura_monitor(:,2)/L_c^2,theta_star_centrogeo,'b--','LineWidth',1.5)
+                            legend(sprintf('x* = %g, y* = %g 2D', x(i), y(j)),sprintf('x* = %g, y* = %g, z* = %g 3D', x(i), y(j), z(k)), sprintf('LCM'), 'Teach C','Location','northeast','Orientation','vertical','FontSize', 15)
+                            ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 20)
+                            xlabel("Fo", 'FontSize', 20)
+                        else if i==1 && j==3 && k==1
+                                plot(t*alpha/(H/2)^2, theta_estrela_2D,'r-', t*alpha/(H/2)^2, theta_star_lcm,'y-', alpha*Temperatura_monitor(:,2)/L_c^2,theta_star_centrosurfN,'b--','LineWidth',1.5)
+                                legend(sprintf('x* = %g, y* = %g 2D', x(i), y(j)), sprintf('LCM'), 'Teach C','Location','northeast','Orientation','vertical','FontSize', 15)
+                                ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 20)
+                                xlabel("Fo", 'FontSize', 20)
+                            else if i==1 && j==3 && k==2
+                                    plot(t*alpha/(H/2)^2, theta_estrela_2D,'r-',t*alpha/(H/2)^2, theta_estrela_3D, 'm--', t*alpha/(H/2)^2, theta_star_lcm,'y-', alpha*Temperatura_monitor(:,2)/L_c^2,theta_star_centrosurfN,'b--','LineWidth',1.5)
+                                    legend(sprintf('x* = %g, y* = %g 2D', x(i), y(j)),sprintf('x* = %g, y* = %g, z* = %g 3D', x(i), y(j), z(k)), sprintf('LCM'), 'Teach C','Location','northeast','Orientation','vertical','FontSize', 15)
+                                    ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 20)
+                                    xlabel("Fo", 'FontSize', 20)
+                                else if i==2 && j==2 && k==1
+                                        plot(t*alpha/(H/2)^2, theta_estrela_2D,'r-', t*alpha/(H/2)^2, theta_star_lcm,'y-', alpha*Temperatura_monitor(:,2)/L_c^2,theta_star_centrosurfO,'b--','LineWidth',1.5)
+                                        legend(sprintf('x* = %g, y* = %g 2D', x(i), y(j)), sprintf('LCM'), 'Teach C','Location','northeast','Orientation','vertical','FontSize', 15)
+                                        ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 20)
+                                        xlabel("Fo", 'FontSize', 20)
+                                    else if i==2 && j==2 && k==2
+                                            plot(t*alpha/(H/2)^2, theta_estrela_2D,'r-',t*alpha/(H/2)^2, theta_estrela_3D, 'm--', t*alpha/(H/2)^2, theta_star_lcm,'y-', alpha*Temperatura_monitor(:,2)/L_c^2,theta_star_centrosurfO,'b--','LineWidth',1.5)
+                                            legend(sprintf('x* = %g, y* = %g 2D', x(i), y(j)),sprintf('x* = %g, y* = %g, z* = %g 3D', x(i), y(j), z(k)), sprintf('LCM'), 'Teach C','Location','northeast','Orientation','vertical','FontSize', 15)
+                                            ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 20)
+                                            xlabel("Fo", 'FontSize', 20)
+                                        else
+                                            plot(t*alpha/(H/2)^2, theta_estrela_2D,'r-',t*alpha/(H/2)^2, theta_estrela_3D, 'm--', t*alpha/(H/2)^2, theta_star_lcm,'y-','LineWidth',1.5)
+                                            legend(sprintf('x* = %g, y* = %g 2D', x(i), y(j)),sprintf('x* = %g, y* = %g, z* = %g 3D', x(i), y(j), z(k)), sprintf('LCM'),'Location','northeast','Orientation','vertical','FontSize', 15)
+                                            ylabel("$\theta*$", 'Interpreter','latex', 'FontSize', 20)
+                                            xlabel("Fo", 'FontSize', 20)
+                                        end
+                                    end
+                                end
+                            end
                         end
                     end
                 end
@@ -540,7 +564,7 @@ for k=1:length(z)
     end
 end
 
-% cálculo dos erros mas ainda tenho de ver isto melhor
+% cálculo dos erros 
 x = linspace(0, 1, 6);
 y = linspace(0, 1, 20);
 z = linspace(0, 1, 5);
@@ -556,55 +580,89 @@ theta_estrela_x = 0;
 theta_estrela_y = 0;
 theta_estrela_z = 0;
 theta_estrela = 0;
-z = [0 1];
+z = 0;
 t = linspace(20, 6000, 300);
-for k=1:length(z)
-    for i=1:2
-        for j=1:3
-            for p=1:length(ksi_x)
-                C_x(p) = 4*sin(ksi_x(p))/(2*ksi_x(p) + sin(2*ksi_x(p)));
-                C_y(p) = 4*sin(ksi_y(p))/(2*ksi_y(p) + sin(2*ksi_y(p)));
-                C_z(p) = 4*sin(ksi_z(p))/(2*ksi_z(p) + sin(2*ksi_z(p)));
-                theta_estrela_x = theta_estrela_x + C_x(p)*exp(-ksi_x(p)^2*alpha.*t/(H/2)^2)*cos(ksi_x(p)*x(i));
-                theta_estrela_y = theta_estrela_y + C_y(p)*exp(-ksi_y(p)^2*alpha.*t/(W)^2)*cos(ksi_y(p)*y(j));
-                theta_estrela_z = theta_estrela_z + C_z(p)*exp(-ksi_z(p)^2*alpha.*t/(L/2)^2)*cos(ksi_z(p)*z(k));
-            end
-            theta_estrela_2D = theta_estrela_x.*theta_estrela_y;
-            theta_estrela_3D = theta_estrela_x.*theta_estrela_y.*theta_estrela_z;
-            theta_estrela_2D = theta_estrela_2D.';
-            theta_estrela_3D = theta_estrela_3D.';
-            theta_star_lcm = exp(-h*A_corpo/(ro*V_corpo*c).*t);
-            erro_2D_3_D = abs(theta_estrela_3D - theta_estrela_2D);
-            erro_LCM_3D = abs(theta_star_lcm - theta_estrela_3D);
-            theta_estrela_x = 0;
-            theta_estrela_y = 0;
-            theta_estrela_z = 0;
+
+for i=1:2
+    for j=1:3
+        for p=1:length(ksi_x)
+            C_x(p) = 4*sin(ksi_x(p))/(2*ksi_x(p) + sin(2*ksi_x(p)));
+            C_y(p) = 4*sin(ksi_y(p))/(2*ksi_y(p) + sin(2*ksi_y(p)));
+            C_z(p) = 4*sin(ksi_z(p))/(2*ksi_z(p) + sin(2*ksi_z(p)));
+            theta_estrela_x = theta_estrela_x + C_x(p)*exp(-ksi_x(p)^2*alpha.*t/(H/2)^2)*cos(ksi_x(p)*x(i));
+            theta_estrela_y = theta_estrela_y + C_y(p)*exp(-ksi_y(p)^2*alpha.*t/(W)^2)*cos(ksi_y(p)*y(j));
+            theta_estrela_z = theta_estrela_z + C_z(p)*exp(-ksi_z(p)^2*alpha.*t/(L/2)^2)*cos(ksi_z(p)*z);
+        end
+        theta_estrela_2D = theta_estrela_x.*theta_estrela_y;
+        theta_estrela_3D = theta_estrela_x.*theta_estrela_y.*theta_estrela_z;
+        theta_estrela_2D_t = theta_estrela_2D.';
+        theta_estrela_3D = theta_estrela_3D.';
+        theta_star_lcm = exp(-h*A_corpo/(ro*V_corpo*c).*t);
+        erro_2D_3_D = abs(theta_estrela_3D - theta_estrela_2D);
+        erro_LCM_3D = abs(theta_star_lcm - theta_estrela_2D);
+        theta_estrela_x = 0;
+        theta_estrela_y = 0;
+        theta_estrela_z = 0;
+        if i==1 && j==1
+            erro_teachC = abs(theta_star_centrosurfS-theta_estrela_2D_t);
             figure()
-            if i==1 && j==1
-                erro_teachC = abs(theta_star_centrosurfS-theta_estrela_3D);
-                plot(t*alpha/(H/2)^2, erro_teachC)
-                legend(sprintf('x = %g, y = %g, z = %g 3D', x(i), y(j), z(k)),'Location','northeast','Orientation','vertical')
-                ylabel("erro", 'Interpreter','latex', 'FontSize', 18)
-                xlabel("t", 'FontSize', 12)
-            else if i==1 && j==2
-                    erro_teachC = abs(theta_star_centrogeo-theta_estrela_3D);
-                    plot(t*alpha/(H/2)^2, erro_teachC)
-                    legend(sprintf('x = %g, y = %g, z = %g 3D', x(i), y(j), z(k)),'Location','northeast','Orientation','vertical')
-                    ylabel("erro", 'Interpreter','latex', 'FontSize', 18)
-                    xlabel("t", 'FontSize', 12)
-                else if i==1 && j==3
-                        erro_teachC = abs(theta_star_centrosurfN-theta_estrela_3D);
-                        plot(t*alpha/(H/2)^2, erro_teachC)
-                        legend(sprintf('x = %g, y = %g, z = %g 3D', x(i), y(j), z(k)),'Location','northeast','Orientation','vertical')
-                        ylabel("erro", 'Interpreter','latex', 'FontSize', 18)
-                        xlabel("t", 'FontSize', 12)
-                    else if i==2 && j==2
-                            erro_teachC = abs(theta_star_centrosurfO-theta_estrela_3D);
-                            plot(t*alpha/(H/2)^2, erro_teachC)
-                            legend(sprintf('x = %g, y = %g, z = %g 3D', x(i), y(j), z(k)),'Location','northeast','Orientation','vertical')
-                            ylabel("erro", 'Interpreter','latex', 'FontSize', 18)
-                            xlabel("t", 'FontSize', 12)
-                        end
+            plot(t*alpha/(H/2)^2, erro_teachC,'LineWidth',1.5)
+            title('Erro absoluto (solução numérica vs solução Analítica)', 'FontSize', 20)
+            legend(sprintf('x* = %g, y* = %g', x(i), y(j)),'Location','northeast','Orientation','vertical','FontSize', 10)
+            ylabel("erro absoluto", 'Interpreter','latex', 'FontSize', 20)
+            xlabel("Fo", 'FontSize', 20)
+            
+            figure()
+            plot(t*alpha/(H/2)^2, erro_LCM_3D,'LineWidth',1.5)
+            title('Erro absoluto (método da Capacitância Global vs Solução Analítica)', 'FontSize', 20)
+            legend(sprintf('x* = %g, y* = %g', x(i), y(j)),'Location','northeast','Orientation','vertical','FontSize', 10)
+            ylabel("erro absoluto", 'Interpreter','latex', 'FontSize', 20)
+            xlabel("Fo", 'FontSize', 20)
+        else if i==1 && j==2
+                erro_teachC = abs(theta_star_centrogeo-theta_estrela_2D_t);
+                figure()
+                plot(t*alpha/(H/2)^2, erro_teachC,'LineWidth',1.5)
+                title('Erro absoluto (solução numérica vs solução Analítica)', 'FontSize', 20)
+                legend(sprintf('x* = %g, y* = %g', x(i), y(j)),'Location','northeast','Orientation','vertical','FontSize', 10)
+                ylabel("erro absoluto", 'Interpreter','latex', 'FontSize', 20)
+                xlabel("Fo", 'FontSize', 20)
+                
+                figure()
+                plot(t*alpha/(H/2)^2, erro_LCM_3D,'LineWidth',1.5)
+                title('Erro absoluto (método da Capacitância Global vs Solução Analítica)', 'FontSize', 20)
+                legend(sprintf('x* = %g, y* = %g', x(i), y(j)),'Location','northeast','Orientation','vertical','FontSize', 10)
+                ylabel("erro absoluto", 'Interpreter','latex', 'FontSize', 20)
+                xlabel("Fo", 'FontSize', 20)
+            else if i==1 && j==3
+                    erro_teachC = abs(theta_star_centrosurfN-theta_estrela_2D_t);
+                    figure()
+                    plot(t*alpha/(H/2)^2, erro_teachC,'LineWidth',1.5)
+                    title('Erro absoluto (solução numérica vs solução Analítica)', 'FontSize', 20)
+                    legend(sprintf('x* = %g, y* = %g', x(i), y(j)),'Location','northeast','Orientation','vertical','FontSize', 10)
+                    ylabel("erro absoluto", 'Interpreter','latex', 'FontSize', 20)
+                    xlabel("Fo", 'FontSize', 20)
+                    
+                    figure()
+                    plot(t*alpha/(H/2)^2, erro_LCM_3D,'LineWidth',1.5)
+                    title('Erro absoluto (método da Capacitância Global vs Solução Analítica)', 'FontSize', 20)
+                    legend(sprintf('x* = %g, y* = %g', x(i), y(j)),'Location','northeast','Orientation','vertical','FontSize', 10)
+                    ylabel("erro absoluto", 'Interpreter','latex', 'FontSize', 20)
+                    xlabel("Fo", 'FontSize', 20)
+                else if i==2 && j==2
+                        erro_teachC = abs(theta_star_centrosurfO-theta_estrela_2D_t);
+                        figure()
+                        plot(t*alpha/(H/2)^2, erro_teachC,'LineWidth',1.5)
+                        title('Erro absoluto (solução numérica vs solução Analítica)', 'FontSize', 20)
+                        legend(sprintf('x* = %g, y* = %g', x(i), y(j)),'Location','northeast','Orientation','vertical','FontSize', 10)
+                        ylabel("erro absoluto", 'Interpreter','latex', 'FontSize', 20)
+                        xlabel("Fo", 'FontSize', 20)
+                        
+                        figure()
+                        plot(t*alpha/(H/2)^2, erro_LCM_3D,'LineWidth',1.5)
+                        title('Erro absoluto (método da Capacitância Global vs Solução Analítica)', 'FontSize', 20)
+                        legend(sprintf('x* = %g, y* = %g', x(i), y(j)),'Location','northeast','Orientation','vertical','FontSize', 10)
+                        ylabel("erro absoluto", 'Interpreter','latex', 'FontSize', 20)
+                        xlabel("Fo", 'FontSize', 20)
                     end
                 end
             end
