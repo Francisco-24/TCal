@@ -215,7 +215,21 @@ Temperatura_centrosurfO = zeros(MAXSTP,2);
 Temperatura_centrosurfS = zeros(MAXSTP,2);
 Tmesh = zeros(8,2,9);
 c = 1;
+
+%Para malha de 82x82
 % Pts_grid = [5,78;6,77;5,38;6,37;5,6;6,5;21,78;22,77;21,38;22,37;21,6;22,5;37,78;38,77;37,38;38,37;37,6;38,5];
+
+%Para malha de 62x62
+% Pts_grid = [4,59;5,58;4,29;5,28;4,5;5,4;16,59;17,58;16,29;17,28;16,5;17,4;28,59;29,58;28,29;29,28;28,5;29,4];
+
+%Para malha de 42x42
+% Pts_grid = [3,40;4,39;3,20;4,19;3,4;4,3;11,40;12,39;11,20;12,19;11,4;12,3;19,40;20,39;19,20;20,19;19,4;20,3];
+
+%Para malha de 22x22
+% Pts_grid = [2,21;3,20;2,11;3,10;2,3;3,2;6,21;7,20;6,11;7,10;6,2;7,3;10,21;11,20;10,11;11,10;10,2;11,3];
+
+%Para malha de 12x12
+%Pts_grid = [2,11;2,6;2,2;4,11;4,6;4,2;6,11;6,6;6,2];
 
 % Iterações no tempo
 for NSTEP=1:MAXSTP
@@ -279,7 +293,7 @@ for NSTEP=1:MAXSTP
     end
 
 
-
+%Para malha 82x82, 62x62, 42x42 e 22x22
 %     if NSTEP == 3 || NSTEP == 6 || NSTEP == 25 || NSTEP == 50 || NSTEP == 100 || NSTEP == 150 || NSTEP == 200 || NSTEP == 250
 %                
 %         Tmesh(c,1,1) = (T(Pts_grid(1,1),Pts_grid(1,2))+T(Pts_grid(2,1),Pts_grid(2,2)))/2;
@@ -303,7 +317,29 @@ for NSTEP=1:MAXSTP
 %         c = c+1;
 %     end
     
-    
+%Para malha 12x12
+%     if NSTEP == 3 || NSTEP == 6 || NSTEP == 25 || NSTEP == 100 || NSTEP == 150 || NSTEP == 250
+%                
+%         Tmesh(c,1,1) = T(Pts_grid(1,1),Pts_grid(1,2));
+%         Tmesh(c,2,1) = TIME;
+%         Tmesh(c,1,2) = T(Pts_grid(2,1),Pts_grid(2,2));
+%         Tmesh(c,2,2) = TIME;
+%         Tmesh(c,1,3) = T(Pts_grid(3,1),Pts_grid(3,2));
+%         Tmesh(c,2,3) = TIME;
+%         Tmesh(c,1,4) = T(Pts_grid(4,1),Pts_grid(4,2));
+%         Tmesh(c,2,4) = TIME;
+%         Tmesh(c,1,5) = T(Pts_grid(5,1),Pts_grid(5,2));
+%         Tmesh(c,2,5) = TIME;
+%         Tmesh(c,1,6) = T(Pts_grid(6,1),Pts_grid(6,2));
+%         Tmesh(c,2,6) = TIME;
+%         Tmesh(c,1,7) = T(Pts_grid(7,1),Pts_grid(7,2));
+%         Tmesh(c,2,7) = TIME;
+%         Tmesh(c,1,8) = T(Pts_grid(8,1),Pts_grid(8,2));
+%         Tmesh(c,2,8) = TIME;
+%         Tmesh(c,1,9) = T(Pts_grid(9,1),Pts_grid(9,2));
+%         Tmesh(c,2,9) = TIME;
+%         c = c+1;
+%     end
 
     Temperatura_monitor(NSTEP,1) = T(IMON,JMON);    
     Temperatura_monitor(NSTEP,2) = TIME;
@@ -336,8 +372,23 @@ for NSTEP=1:MAXSTP
 end
 
 % for sheet = 1:9
-%         filename = 'Grid_independency.xlsx';
-%         writematrix(Tmesh(:,:,sheet), filename,'Sheet',sheet,'Range', 'P4:Q11')
+%   filename = 'Grid_independency.xlsx';
+%   
+%   Para malha 82x82
+%   writematrix(Tmesh(:,:,sheet), filename,'Sheet',sheet,'Range', 'P4:Q11')
+% 
+%   Para malha 62x62
+%   writematrix(Tmesh(:,:,sheet), filename,'Sheet',sheet,'Range', 'M4:N11')
+% 
+%   Para malha 42x42
+%   writematrix(Tmesh(:,:,sheet), filename,'Sheet',sheet,'Range', 'J4:K11')
+% 
+%   Para malha 22x22
+%   writematrix(Tmesh(:,:,sheet), filename,'Sheet',sheet,'Range', 'G4:H11')
+% 
+%   Para malha 12x12
+%   writematrix(Tmesh(:,:,sheet), filename,'Sheet',sheet,'Range', 'D4:E11')
+% 
 % end
 
 fclose(fid);
@@ -444,7 +495,7 @@ Bi_x = h*L_x/k;
 Bi_y = h*L_y/k;
 Bi_z = h*L_z/k;
 
-Bi = [Bi_x Bi_y Bi_z]
+Bi = [Bi_x Bi_y Bi_z];
 
 
 for l=1:3
@@ -498,7 +549,7 @@ for k=1:length(z)
                 theta_estrela_y = theta_estrela_y + C_y(p)*exp(-ksi_y(p)^2*alpha.*t/(W)^2)*cos(ksi_y(p)*y(j));
                 theta_estrela_z = theta_estrela_z + C_z(p)*exp(-ksi_z(p)^2*alpha.*t/(L/2)^2)*cos(ksi_z(p)*z(k));
             end
-            theta_estrela_2D = theta_estrela_x.*theta_estrela_y
+            theta_estrela_2D = theta_estrela_x.*theta_estrela_y;
             theta_estrela_3D = theta_estrela_x.*theta_estrela_y.*theta_estrela_z;
             theta_star_lcm = exp(-h*A_corpo/(ro*V_corpo*c).*t);
             erro_2D_3_D = abs(theta_estrela_3D - theta_estrela_2D);
