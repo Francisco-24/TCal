@@ -32,10 +32,9 @@ for l=1:3
             if j==1
                 csi(l,j)=out;
                 j = j+1;
-            else if out ~= csi(l,j-1) && out-csi(l,j-1)>0.5
+            elseif out ~= csi(l,j-1) && out-csi(l,j-1)>0.5
                     csi(l,j) = out;
                     j= j+1;
-                end
             end
         end
     end
