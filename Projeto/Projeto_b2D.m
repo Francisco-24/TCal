@@ -5,8 +5,8 @@ clc
 H = 0.24; 
 W = 0.24; 
 L = 3.00; 
-h = 250; %W/m^2K
-T_in = 1150; %ºC
+h = 250; 
+T_in = 1150; 
 T_amb = 20;
 ro = 7930;
 c = 385;
@@ -30,10 +30,9 @@ for l=1:2
             if j==1
                 csi(l,j)=out;
                 j = j+1;
-            else if out ~= csi(l,j-1) && out-csi(l,j-1)>0.5
+            elseif out ~= csi(l,j-1) && out-csi(l,j-1)>0.5
                     csi(l,j) = out;
                     j= j+1;
-                end
             end
         end
     end
