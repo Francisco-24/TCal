@@ -318,7 +318,7 @@ for NSTEP=1:MAXSTP
 %     end
     
 %Para malha 12x12
-%     if NSTEP == 3 || NSTEP == 6 || NSTEP == 25 || NSTEP == 100 || NSTEP == 150 || NSTEP == 250
+%     if NSTEP == 3 || NSTEP == 6 || NSTEP == 25 || NSTEP == 50 || NSTEP == 100 || NSTEP == 150 || NSTEP == 200 || NSTEP == 250
 %                
 %         Tmesh(c,1,1) = T(Pts_grid(1,1),Pts_grid(1,2));
 %         Tmesh(c,2,1) = TIME;
